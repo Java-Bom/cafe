@@ -19,6 +19,14 @@ public class Order {
         return this.tableNumber == table.getNumber();
     }
 
+    public int getMenuNumber() {
+        return menuNumber;
+    }
+
+    public int getTableNumber() {
+        return tableNumber;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
