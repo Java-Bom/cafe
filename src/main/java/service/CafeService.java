@@ -30,21 +30,24 @@ public class CafeService {
     }
 
     public long calculate(final int tableNumber, PayType payType) {
-        List<Menu> menus = orderRepository.findByTable(tableNumber).stream()
-                .map(Order::getMenuNumber)
-                .map(MenuRepository::findByNumber)
-                .collect(toList());
-
+        List<Menu> menus = getMenusByTable(tableNumber);
         long numberOfCake = menus.stream()
                 .filter(menu -> menu.isCategory(CAKE))
                 .count();
-
         float discountRate = payType.getDiscountRate();
 
         orderRepository.deleteByTable(tableNumber);
+
         return (long) ((menus.stream()
                 .mapToInt(Menu::getPrice)
                 .sum() - ((numberOfCake / 3) * 3000)) * discountRate);
+    }
+
+    private List<Menu> getMenusByTable(final int tableNumber) {
+        return orderRepository.findByTable(tableNumber).stream()
+                .map(Order::getMenuNumber)
+                .map(MenuRepository::findByNumber)
+                .collect(toList());
     }
 
     public boolean hasBills(final int tableNumber) {

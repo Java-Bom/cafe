@@ -6,15 +6,15 @@ import view.OutputView;
 import java.util.List;
 
 public class Application {
-    // TODO 구현 진행
+
     public static void main(String[] args) {
         final List<Table> tables = TableRepository.tables();
         final CafeService cafeService = new CafeService(new OrderRepository());
 
         int selectNo = InputView.showMain();
 
-        while (selectNo != 3) {
-            if (selectNo == 1) { // 주문
+        while (isNotShutDown(selectNo)) {
+            if (isOrder(selectNo)) { // 주문
                 OutputView.printTables(tables, cafeService);
                 int tableNumber = InputView.inputTableNumber();
                 OutputView.printMenus(MenuRepository.menus());
@@ -22,7 +22,7 @@ public class Application {
                 int count = InputView.inputMenuCount();
                 cafeService.orderMenu(menuNumber, count, tableNumber);
             }
-            if (selectNo == 2) {
+            if (isCalculate(selectNo)) {
                 OutputView.printTables(tables, cafeService);
                 int tableNumber = InputView.inputTableNumberForCalculate();
                 OutputView.printOrders(cafeService, tableNumber);
@@ -32,5 +32,17 @@ public class Application {
             }
             selectNo = InputView.showMain();
         }
+    }
+
+    private static boolean isOrder(final int selectNo) {
+        return selectNo == 1;
+    }
+
+    private static boolean isCalculate(final int selectNo) {
+        return selectNo == 2;
+    }
+
+    private static boolean isNotShutDown(final int selectNo) {
+        return selectNo != 3;
     }
 }
