@@ -33,13 +33,13 @@ public class OrderMenus {
         }
     }
 
-    public int getMenuQuantityOf(final Menu specificMenu) {
+    private int getMenuQuantityOf(final Menu specificMenu) {
         return (int) this.menus.stream()
                 .filter(menu -> menu == specificMenu)
                 .count();
     }
 
-    public List<Menu> getMenuKinds() {
+    private List<Menu> getMenuKinds() {
         return this.menus.stream()
                 .distinct()
                 .collect(Collectors.toUnmodifiableList());
