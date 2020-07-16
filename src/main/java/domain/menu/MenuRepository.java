@@ -1,8 +1,11 @@
-package domain;
+package domain.menu;
+
+import domain.enums.Category;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class MenuRepository {
     private static final List<Menu> menus = new ArrayList<>();
@@ -20,7 +23,14 @@ public class MenuRepository {
         menus.add(new Menu(24, "그린티 라떼", Category.BEVERAGE, 6000));
     }
 
-    public static List<Menu> menus() {
+    public static List<Menu> findAll() {
         return Collections.unmodifiableList(menus);
+    }
+
+    public static Menu find(final int menuIdx) {
+        return menus.stream()
+                .filter(menu -> menu.equalsOf(menuIdx))
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(String.format("메뉴번호: %d, 존재하지 않는 메뉴번호입니다.", menuIdx)));
     }
 }
