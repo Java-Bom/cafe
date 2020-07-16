@@ -28,6 +28,6 @@ public class MenuRepository {
         return menus.stream()
                 .filter(menu -> menu.getNumber() == menuNumber)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d번 메뉴는 존재하지 않습니다.", menuNumber)));
     }
 }

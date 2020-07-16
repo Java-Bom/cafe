@@ -18,7 +18,7 @@ public enum Payment {
         return Arrays.stream(values())
                 .filter(pay -> pay.index == index)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d번 결제 수단은 존재하지 않습니다.", index)));
     }
 
     public int calculateFinalPrice(int price) {

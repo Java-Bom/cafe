@@ -24,6 +24,6 @@ public class TableRepository {
         return tables.stream()
                 .filter(table -> table.getNumber() == tableNumber)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d번 테이블은 존재하지 않습니다.", tableNumber)));
     }
 }

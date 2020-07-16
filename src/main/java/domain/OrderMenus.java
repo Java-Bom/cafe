@@ -29,7 +29,7 @@ public class OrderMenus {
         int currentMenuQuantity = getMenuQuantityOf(menu);
         if (currentMenuQuantity + quantity > MAX_ONE_MENU_QUANTITY) {
             throw new IllegalArgumentException(
-                    String.format("한 메뉴의 수량은 30개를 초과할 수 없음. 기존 메뉴수량 : %d, 새로 들어온 수량 : %d", currentMenuQuantity, quantity));
+                    String.format("한 메뉴의 수량은 30개를 초과할 수 없습니다. 기존 메뉴수량 : %d, 새로 들어온 수량 : %d", currentMenuQuantity, quantity));
         }
     }
 

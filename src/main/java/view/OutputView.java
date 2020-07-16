@@ -65,7 +65,11 @@ public class OutputView {
 
     public static void printFinalPrice(final int finalPrice) {
         System.out.println("## 최종 결제할 금액");
-        System.out.println(String.format("%d원",finalPrice));
+        System.out.println(String.format("%d원", finalPrice));
+    }
+
+    public static void printFunctionNotExist() {
+        System.out.println("없는 기능입니다. 다시 입력해주세요.");
     }
 
 }

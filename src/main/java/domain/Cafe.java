@@ -41,8 +41,15 @@ public class Cafe {
 
     public int payOrders(final int tableNumber, final Payment payment) {
         Table table = findTableByNumber(tableNumber);
+        validateTableHasMenu(table);
         int totalPrice = table.getTotalPrice(payment);
         table.clear();
         return totalPrice;
+    }
+
+    private void validateTableHasMenu(Table table) {
+        if (!table.hasMenu()) {
+            throw new IllegalArgumentException("해당 테이블에는 주문한 메뉴가 없습니다.");
+        }
     }
 }
