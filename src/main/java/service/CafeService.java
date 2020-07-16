@@ -1,9 +1,13 @@
 package service;
 
-import domain.Menu;
-import domain.MenuRepository;
-import domain.Order;
-import domain.OrderRepository;
+import domain.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import static domain.Category.CAKE;
+import static java.util.stream.Collectors.*;
 
 public class CafeService {
     private final OrderRepository orderRepository;
@@ -12,15 +16,38 @@ public class CafeService {
         this.orderRepository = orderRepository;
     }
 
-    public void orderMenu(final int menumNumber, final int tableNumber) {
-        orderRepository.addOrder(new Order(menumNumber, tableNumber));
+    public void orderMenu(final int menumNumber, final int count, final int tableNumber) {
+        for (int i = 0; i < count; i++) {
+            orderRepository.addOrder(new Order(menumNumber, tableNumber));
+        }
     }
 
-    public long calculate(final int tableNumber) {
-        return orderRepository.findByTable(tableNumber).stream()
+    public Map<Menu, Long> findBillsByTable(final int tableNumber) {
+        List<Order> orders = orderRepository.findByTable(tableNumber);
+        return orders.stream()
+                .map(order -> MenuRepository.findByNumber(order.getMenuNumber()))
+                .collect(groupingBy(Function.identity(), counting()));
+    }
+
+    public long calculate(final int tableNumber, PayType payType) {
+        List<Menu> menus = orderRepository.findByTable(tableNumber).stream()
                 .map(Order::getMenuNumber)
                 .map(MenuRepository::findByNumber)
-                .map(Menu::getPrice)
-                .mapToInt(Integer::intValue).sum();
+                .collect(toList());
+
+        long numberOfCake = menus.stream()
+                .filter(menu -> menu.isCategory(CAKE))
+                .count();
+
+        float discountRate = payType.getDiscountRate();
+
+        orderRepository.deleteByTable(tableNumber);
+        return (long) ((menus.stream()
+                .mapToInt(Menu::getPrice)
+                .sum() - ((numberOfCake / 3) * 3000)) * discountRate);
+    }
+
+    public boolean hasBills(final int tableNumber) {
+        return !orderRepository.findByTable(tableNumber).isEmpty();
     }
 }

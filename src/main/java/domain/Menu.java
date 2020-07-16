@@ -17,8 +17,16 @@ public class Menu {
         return this.number == menuNumber;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getPrice() {
         return price;
+    }
+
+    public boolean isCategory(Category category) {
+        return this.category == category;
     }
 
     @Override

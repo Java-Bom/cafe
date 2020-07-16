@@ -24,4 +24,8 @@ public class OrderRepository {
                 .filter(menu -> menu.isEqualTableNumberTo(new Table(tableNumber)))
                 .collect(Collectors.toList());
     }
+
+    public void deleteByTable(final int tableNumber) {
+        orders.removeIf(order -> order.getTableNumber() == tableNumber);
+    }
 }

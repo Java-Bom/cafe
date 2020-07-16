@@ -1,7 +1,4 @@
-import domain.MenuRepository;
-import domain.OrderRepository;
-import domain.Table;
-import domain.TableRepository;
+import domain.*;
 import service.CafeService;
 import view.InputView;
 import view.OutputView;
@@ -18,16 +15,20 @@ public class Application {
 
         while (selectNo != 3) {
             if (selectNo == 1) { // 주문
-                OutputView.printTables(tables);
+                OutputView.printTables(tables, cafeService);
                 int tableNumber = InputView.inputTableNumber();
                 OutputView.printMenus(MenuRepository.menus());
                 int menuNumber = InputView.inputMenuNumber();
-                cafeService.orderMenu(menuNumber, tableNumber);
+                int count = InputView.inputMenuCount();
+                cafeService.orderMenu(menuNumber, count, tableNumber);
             }
             if (selectNo == 2) {
-                OutputView.printTables(tables);
-                int tableNumber = InputView.inputTableNumber();
-                System.out.println("최종결제금액: " + cafeService.calculate(tableNumber));
+                OutputView.printTables(tables, cafeService);
+                int tableNumber = InputView.inputTableNumberForCalculate();
+                OutputView.printOrders(cafeService, tableNumber);
+                int payType = InputView.askPayType(tableNumber);
+                long totalPrice = cafeService.calculate(tableNumber, PayType.findByNumber(payType));
+                OutputView.printTotalPrice(totalPrice);
             }
             selectNo = InputView.showMain();
         }
