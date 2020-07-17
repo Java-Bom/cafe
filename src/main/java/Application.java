@@ -13,7 +13,7 @@ public class Application {
 
         int selectNo = InputView.showMain();
 
-        while (Pos.isExit(selectNo)) {
+        while (!Pos.isExit(selectNo)) {
             if (Pos.isOrder(selectNo)) { // 주문
                 OutputView.printTables(tables, cafeService);
                 int tableNumber = InputView.inputTableNumber();

@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 
 public enum PayType {
-    CASH(1, 0.9f), CARD(2, 1);
+    CARD(1, 1), CASH(1, 0.9f);
 
     private final int number;
     private final float discountRate;

@@ -14,10 +14,10 @@ public enum Pos {
     }
 
     public static boolean isOrder(final int selectNumber) {
-        return CALCULATION.selectNumber == selectNumber;
+        return ORDER.selectNumber == selectNumber;
     }
 
     public static boolean isCalculation(final int selectNumber) {
-        return ORDER.selectNumber == selectNumber;
+        return CALCULATION.selectNumber == selectNumber;
     }
 }
