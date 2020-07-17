@@ -1,4 +1,4 @@
-package domain;
+package domain.menu;
 
 public enum Category {
     CAKE("케이크"),

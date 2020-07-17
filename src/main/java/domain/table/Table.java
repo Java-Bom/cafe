@@ -1,4 +1,4 @@
-package domain;
+package domain.table;
 
 public class Table {
     private final int number;
@@ -10,5 +10,9 @@ public class Table {
     @Override
     public String toString() {
         return Integer.toString(number);
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

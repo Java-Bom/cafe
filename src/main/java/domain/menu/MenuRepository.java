@@ -1,4 +1,4 @@
-package domain;
+package domain.menu;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,5 +22,13 @@ public class MenuRepository {
 
     public static List<Menu> menus() {
         return Collections.unmodifiableList(menus);
+    }
+
+    public static Menu getMenuByNumber(final int number) {
+        return menus.stream()
+                .filter(menu -> menu.getNumber() == number)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("입력한 메뉴 번호 : %d - 입력하신 번호에 해당되는 메뉴는 존재하지않습니다.", number)));
     }
 }
