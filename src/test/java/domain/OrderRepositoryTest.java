@@ -25,8 +25,8 @@ class OrderRepositoryTest {
     @DisplayName("주문레포지토리에서 해당 테이블에 해당하는 주문만 뽑는다")
     @Test
     void getOrderByTable() {
-        List<Order> tableOne = orderRepository.findByTable(1);
-        List<Order> tableTwo = orderRepository.findByTable(2);
+        List<Order> tableOne = orderRepository.findByTableNumber(1);
+        List<Order> tableTwo = orderRepository.findByTableNumber(2);
 
         assertAll(
                 () -> assertThat(tableOne).contains(new Order(1, 1), new Order(2, 1)),
@@ -43,6 +43,14 @@ class OrderRepositoryTest {
         assertThatThrownBy(() -> failRepo.addOrder(new Order(2, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("Max Order Counts Of Per Table is %d", 30));
+    }
+
+    @DisplayName("해당 테이블 넘버에 해당하는 주문을 모두 삭제한다")
+    @Test
+    void delete() {
+        orderRepository.resolveByTableNumber(1);
+
+        assertThat(orderRepository.findByTableNumber(1).size()).isEqualTo(0);
     }
 
     private void fillThirty(final OrderRepository failRepo) {

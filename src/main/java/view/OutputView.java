@@ -1,11 +1,11 @@
 package view;
 
+import domain.Bill;
 import domain.Menu;
 import domain.Table;
 import service.CafeService;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final String TOP_LINE = "┌ ─ ┐";
@@ -28,10 +28,11 @@ public class OutputView {
     }
 
     public static void printOrders(CafeService cafeService, int tableNumber) {
-        Map<Menu, Long> bills = cafeService.findBillsByTable(tableNumber);
+        Bill bill = cafeService.findBillsByTable(tableNumber);
         System.out.println("|   메뉴   |   수량   |   금액   |");
-        for (Map.Entry<Menu, Long> bill : bills.entrySet()) {
-            System.out.printf("%s  %d  %d %n", bill.getKey().getName(), bill.getValue(), bill.getKey().getPrice() * bill.getValue());
+        List<Bill.BillTemplate> billTemplates = bill.getBillTemplates();
+        for (Bill.BillTemplate billTemplate : billTemplates) {
+            System.out.printf("%s  %d  %d %n", billTemplate.getName(), billTemplate.getCount(), billTemplate.getPrice());
         }
     }
 

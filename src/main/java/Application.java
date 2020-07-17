@@ -13,8 +13,8 @@ public class Application {
 
         int selectNo = InputView.showMain();
 
-        while (isNotShutDown(selectNo)) {
-            if (isOrder(selectNo)) { // 주문
+        while (Pos.isExit(selectNo)) {
+            if (Pos.isOrder(selectNo)) { // 주문
                 OutputView.printTables(tables, cafeService);
                 int tableNumber = InputView.inputTableNumber();
                 OutputView.printMenus(MenuRepository.menus());
@@ -22,7 +22,7 @@ public class Application {
                 int count = InputView.inputMenuCount();
                 cafeService.orderMenu(menuNumber, count, tableNumber);
             }
-            if (isCalculate(selectNo)) {
+            if (Pos.isCalculation(selectNo)) {
                 OutputView.printTables(tables, cafeService);
                 int tableNumber = InputView.inputTableNumberForCalculate();
                 OutputView.printOrders(cafeService, tableNumber);
@@ -32,17 +32,5 @@ public class Application {
             }
             selectNo = InputView.showMain();
         }
-    }
-
-    private static boolean isOrder(final int selectNo) {
-        return selectNo == 1;
-    }
-
-    private static boolean isCalculate(final int selectNo) {
-        return selectNo == 2;
-    }
-
-    private static boolean isNotShutDown(final int selectNo) {
-        return selectNo != 3;
     }
 }

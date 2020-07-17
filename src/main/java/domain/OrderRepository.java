@@ -14,18 +14,18 @@ public class OrderRepository {
     }
 
     private void validate(final Order order) {
-        if (findByTable(order.getTableNumber()).size() >= MAX_ORDER_PER_TABLE) {
+        if (findByTableNumber(order.getTableNumber()).size() >= MAX_ORDER_PER_TABLE) {
             throw new IllegalArgumentException(String.format("Max Order Counts Of Per Table is %d", MAX_ORDER_PER_TABLE));
         }
     }
 
-    public List<Order> findByTable(final int tableNumber) {
+    public List<Order> findByTableNumber(final int tableNumber) {
         return orders.stream()
                 .filter(menu -> menu.isEqualTableNumberTo(new Table(tableNumber)))
                 .collect(Collectors.toList());
     }
 
-    public void deleteByTable(final int tableNumber) {
+    public void resolveByTableNumber(final int tableNumber) {
         orders.removeIf(order -> order.getTableNumber() == tableNumber);
     }
 }
