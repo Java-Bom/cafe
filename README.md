@@ -96,14 +96,15 @@
 기능 요구사항을 반드시 작성해주세요.
 
 깃 커밋은 다음과 같은 템플릿을 이용해주세요.
-
+```
 <type>: <subject>
 <BLANK LINE>
 <body>
+```
+type: feat(기능추가),docs(문서작성),refactor(수정)  
+subject: 해당 커밋의 제목  
+body: 해당 커밋의 상세 내용  
 
-type: feat(기능추가),docs(문서작성),refactor(수정)
-subject: 해당 커밋의 제목
-body: 해당 커밋의 상세 내용
 PR 생성시 클래스 다이어그램을 설명과 함께 첨부해 주세요.
 
 미션은 **step1/[자신의 이니셜]** 브랜치를 생성하고 진행해주세요.
