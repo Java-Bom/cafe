@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>자바봄 CAFFE POS</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
+            rel="stylesheet"
+    />
+    <link href="css/pos.css" rel="stylesheet"/>
+    <link href="css/sales.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-200 h-screen">
+<div class="flex justify-center items-center app-container">
+    <div class="text-center">
+        <div class="flex justify-center md:py-10 lg:py-10 app-container">
+            <div class="max-w-md width-450px rounded bg-white shadow-lg p-6">
+                <div class="font-bold text-xl mb-3 text-center">매출 현황</div>
+
+                <div class="mt-5 flex table-list-container relative overflow-y-auto">
+                    <div class="w-full" id="sales-list">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/posApp.js" type="module"></script>
+<script src="js/sales.js" type="module"></script>
+</body>
+</html>
