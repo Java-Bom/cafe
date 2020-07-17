@@ -9,6 +9,8 @@ import domain.table.Table;
 import domain.table.Tables;
 import domain.vo.Amount;
 
+import java.util.List;
+
 public class Pos {
 
     private final Orders orders;
@@ -49,8 +51,12 @@ public class Pos {
         if (!orderTables.contains(table)) {
             throw new IllegalArgumentException(String.format("결제할 테이블 : %d - 해당 테이블은 주문한 내역이 없습니다.", table.getNumber()));
         }
-        Order orderByTable = orders.getOrderByTable(table);
 
-        return payment.getPaymentAmount(orderByTable.getOrderMenus(), paymentType);
+        Order orderByTable = orders.getOrderByTable(table);
+        List<OrderMenu> orderMenus = orderByTable.getOrderMenus();
+
+        orderTables.removeTable(table);
+        orders.remove(orderByTable);
+        return payment.getPaymentAmount(orderMenus, paymentType);
     }
 }

@@ -14,4 +14,8 @@ public class Tables {
     public boolean contains(final Table table) {
         return tables.contains(table);
     }
+
+    public void removeTable(final Table table) {
+        tables.remove(table);
+    }
 }
