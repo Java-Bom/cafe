@@ -25,19 +25,24 @@
             <div class="max-w-md width-450px rounded bg-white shadow-lg p-6">
                 <div class="font-bold text-xl mb-3 text-center">메뉴 관리</div>
                 <form>
-                    <div class="mb-4">
+                    <div class="mb-4 text-left">
                         <input
                                 autocomplete="off"
-                                class="appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-50"
+                                class="appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
                                 id="menu-name"
                                 placeholder="메뉴 이름"
                                 type="text"
                         />
+                        <select
+                                class="appearance-none bg-white border w-50 border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                                id="menu-type-select"
+                        >
+                        </select>
                         <input
                                 autocomplete="off"
                                 class="appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-30"
                                 id="menu-price"
-                                placeholder="메뉴 가격"
+                                placeholder="가격"
                                 type="text"
                         />
                         <button

@@ -1,5 +1,5 @@
-import {initMenu} from "./utils/templates.js";
-import {mockMenus} from "./utils/mockData.js";
+import {initMenu, initMenuCategory} from "./utils/templates.js";
+import {mockMenuCategory, mockMenus} from "./utils/mockData.js";
 import {EVENT_TYPE} from './utils/constants.js'
 
 
@@ -37,6 +37,7 @@ function MenuApp() {
     const initTables = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
         initMenu(mockMenus);
+        initMenuCategory(mockMenuCategory);
         initEventListeners();
     }
 

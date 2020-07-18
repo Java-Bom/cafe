@@ -114,3 +114,10 @@ export const initOrderMenuOption = (data) => {
 
 
 export const orderMenuOptionTemplate = data => `<option value="${data.menuId}">${data.menuName}</option>`
+
+export const initMenuCategory = (data) => {
+    const categoryOptions = data ? data.map(category => categoryOptionTemplate(category)).join('') : null
+    document.querySelector('#menu-type-select').insertAdjacentHTML('afterBegin', categoryOptions)
+}
+
+export const categoryOptionTemplate = data => `<option value="${data.categoryId}">${data.name}</option>`

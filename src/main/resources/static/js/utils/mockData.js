@@ -65,6 +65,17 @@ export const mockMenus = [
     }
 ];
 
+export const mockMenuCategory = [
+    {
+        'categoryId': 1,
+        'name': 'CAKE'
+    },
+    {
+        'categoryId': 2,
+        'name': 'BEVERAGE'
+    }
+]
+
 export const mockTable = [
     {
         'tableId': 1,
