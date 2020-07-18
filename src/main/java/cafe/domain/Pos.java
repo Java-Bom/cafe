@@ -1,4 +1,4 @@
-package domain;
+package cafe.domain;
 
 public enum Pos {
     ORDER(1), CALCULATION(2), EXIT(3);

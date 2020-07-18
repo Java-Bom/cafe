@@ -1,12 +1,12 @@
-package service;
+package cafe.service;
 
-import domain.*;
+import cafe.domain.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static domain.Category.CAKE;
+import static cafe.domain.Category.CAKE;
 import static java.util.stream.Collectors.*;
 
 public class CafeService {

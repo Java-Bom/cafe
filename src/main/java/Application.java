@@ -1,5 +1,5 @@
-import domain.*;
-import service.CafeService;
+import cafe.domain.*;
+import cafe.service.CafeService;
 import view.InputView;
 import view.OutputView;
 

@@ -1,14 +1,14 @@
-package domain;
+package cafe.domain;
 
 import java.util.Objects;
 
 public class Menu {
     private final int number;
     private final String name;
-    private final Category category;
+    private final cafe.domain.Category category;
     private final int price;
 
-    public Menu(final int number, final String name, final Category category, final int price) {
+    public Menu(final int number, final String name, final cafe.domain.Category category, final int price) {
         this.number = number;
         this.name = name;
         this.category = category;
@@ -27,7 +27,7 @@ public class Menu {
         return price;
     }
 
-    public boolean isCategory(Category category) {
+    public boolean isCategory(cafe.domain.Category category) {
         return this.category == category;
     }
 

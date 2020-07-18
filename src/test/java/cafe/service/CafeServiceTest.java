@@ -1,8 +1,8 @@
-package service;
+package cafe.service;
 
-import domain.Bill;
-import domain.OrderRepository;
-import domain.PayType;
+import cafe.domain.Bill;
+import cafe.domain.OrderRepository;
+import cafe.domain.PayType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +16,7 @@ class CafeServiceTest {
     @Test
     void order() {
         OrderRepository orderRepository = new OrderRepository();
-        CafeService cafeService = new CafeService(orderRepository);
+        cafe.service.CafeService cafeService = new cafe.service.CafeService(orderRepository);
 
         cafeService.orderMenu(1, 3, 1);
 
@@ -27,7 +27,7 @@ class CafeServiceTest {
     @Test
     void bill() {
         OrderRepository orderRepository = new OrderRepository();
-        CafeService cafeService = new CafeService(orderRepository);
+        cafe.service.CafeService cafeService = new cafe.service.CafeService(orderRepository);
         cafeService.orderMenu(1, 3, 1);
         cafeService.orderMenu(1, 3, 1);
         cafeService.orderMenu(2, 3, 1);
@@ -42,7 +42,7 @@ class CafeServiceTest {
     @ParameterizedTest
     void calculate(PayType payType, Long price) {
         OrderRepository orderRepository = new OrderRepository();
-        CafeService cafeService = new CafeService(orderRepository);
+        cafe.service.CafeService cafeService = new cafe.service.CafeService(orderRepository);
         cafeService.orderMenu(1, 3, 1);
         cafeService.orderMenu(1, 3, 1);
 

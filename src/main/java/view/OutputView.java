@@ -1,9 +1,9 @@
 package view;
 
-import domain.Bill;
-import domain.Menu;
-import domain.Table;
-import service.CafeService;
+import cafe.domain.Bill;
+import cafe.domain.Menu;
+import cafe.domain.Table;
+import cafe.service.CafeService;
 
 import java.util.List;
 

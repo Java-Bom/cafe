@@ -1,4 +1,4 @@
-package domain;
+package cafe.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +8,13 @@ import java.util.Objects;
 public class Bill {
     private final Map<Menu, Long> bills;
 
-    public Bill(final Map<Menu, Long> bills) {
+    public Bill(final Map<cafe.domain.Menu, Long> bills) {
         this.bills = bills;
     }
 
     public List<BillTemplate> getBillTemplates() {
         List<BillTemplate> billTemplates = new ArrayList<>();
-        for (Map.Entry<Menu, Long> bill : bills.entrySet()) {
+        for (Map.Entry<cafe.domain.Menu, Long> bill : bills.entrySet()) {
             billTemplates.add(new BillTemplate(bill.getKey().getName(), bill.getValue(), bill.getKey().getPrice() * bill.getValue()));
         }
         return billTemplates;
