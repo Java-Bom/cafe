@@ -137,7 +137,7 @@ PR 생성시 클래스 다이어그램을 설명과 함께 첨부해 주세요.
   - 새로운 메뉴를 추가 할 수 있습니다.
   - 기존 메뉴를 삭제할 수 있습니다.
 
-![image](https://user-images.githubusercontent.com/13347548/87826223-75d7ce80-c8b3-11ea-8005-2fbbe02274fb.png)
+![image](https://user-images.githubusercontent.com/13347548/87855695-dcf98f80-c954-11ea-92cb-84ac5a3de393.png)
 
 - 테이블 관리
   - 새로운 테이블을 추가 할 수 있습니다.
