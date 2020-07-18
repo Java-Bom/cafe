@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Bill {
     private final Map<Menu, Long> bills;
@@ -17,10 +18,6 @@ public class Bill {
             billTemplates.add(new BillTemplate(bill.getKey().getName(), bill.getValue(), bill.getKey().getPrice() * bill.getValue()));
         }
         return billTemplates;
-    }
-
-    public int count() {
-        return bills.size();
     }
 
     public static class BillTemplate {
@@ -44,6 +41,21 @@ public class Bill {
 
         public Long getPrice() {
             return prices;
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            final BillTemplate that = (BillTemplate) o;
+            return Objects.equals(name, that.name) &&
+                    Objects.equals(count, that.count) &&
+                    Objects.equals(prices, that.prices);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, count, prices);
         }
     }
 }

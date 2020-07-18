@@ -19,9 +19,9 @@ public class CafeService {
         this.orderRepository = orderRepository;
     }
 
-    public void orderMenu(final int menumNumber, final int count, final int tableNumber) {
+    public void orderMenu(final int menuNumber, final int count, final int tableNumber) {
         for (int i = 0; i < count; i++) {
-            orderRepository.addOrder(new Order(menumNumber, tableNumber));
+            orderRepository.addOrder(new Order(menuNumber, tableNumber));
         }
     }
 

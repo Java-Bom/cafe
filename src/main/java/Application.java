@@ -14,23 +14,31 @@ public class Application {
         int selectNo = InputView.showMain();
 
         while (!Pos.isExit(selectNo)) {
-            if (Pos.isOrder(selectNo)) { // 주문
-                OutputView.printTables(tables, cafeService);
-                int tableNumber = InputView.inputTableNumber();
-                OutputView.printMenus(MenuRepository.menus());
-                int menuNumber = InputView.inputMenuNumber();
-                int count = InputView.inputMenuCount();
-                cafeService.orderMenu(menuNumber, count, tableNumber);
+            if (Pos.isOrder(selectNo)) {
+                orderProcess(tables, cafeService);
             }
             if (Pos.isCalculation(selectNo)) {
-                OutputView.printTables(tables, cafeService);
-                int tableNumber = InputView.inputTableNumberForCalculate();
-                OutputView.printOrders(cafeService, tableNumber);
-                int payType = InputView.askPayType(tableNumber);
-                long totalPrice = cafeService.calculate(tableNumber, PayType.findByNumber(payType));
-                OutputView.printTotalPrice(totalPrice);
+                calculationProcess(tables, cafeService);
             }
             selectNo = InputView.showMain();
         }
+    }
+
+    private static void calculationProcess(final List<Table> tables, final CafeService cafeService) {
+        OutputView.printTables(tables, cafeService);
+        int tableNumber = InputView.inputTableNumberForCalculate();
+        OutputView.printOrders(cafeService, tableNumber);
+        int payType = InputView.askPayType(tableNumber);
+        long totalPrice = cafeService.calculate(tableNumber, PayType.findByNumber(payType));
+        OutputView.printTotalPrice(totalPrice);
+    }
+
+    private static void orderProcess(final List<Table> tables, final CafeService cafeService) {
+        OutputView.printTables(tables, cafeService);
+        int tableNumber = InputView.inputTableNumber();
+        OutputView.printMenus(MenuRepository.menus());
+        int menuNumber = InputView.inputMenuNumber();
+        int count = InputView.inputMenuCount();
+        cafeService.orderMenu(menuNumber, count, tableNumber);
     }
 }
