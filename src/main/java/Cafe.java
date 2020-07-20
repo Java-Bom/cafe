@@ -1,10 +1,13 @@
-import domain.Pos;
 import domain.menu.Menu;
 import domain.menu.MenuRepository;
 import domain.menu.OrderMenu;
+import domain.payment.DiscountConditions;
 import domain.payment.PaymentType;
+import domain.registration.Order;
+import domain.registration.Orders;
 import domain.table.Table;
 import domain.table.TableRepository;
+import domain.vo.Quantity;
 import view.InputView;
 import view.OutputView;
 
@@ -12,11 +15,7 @@ public class Cafe {
 
     private static boolean isOn = true;
 
-    private Pos pos = new Pos();
-
-    private Cafe() {
-
-    }
+    private final Orders orders = new Orders();
 
     public static void start() {
         Cafe cafe = new Cafe();
@@ -38,35 +37,28 @@ public class Cafe {
 
     }
 
+    private void startOrder() {
+        OutputView.printTables(TableRepository.tables());
+        final Table tableNumber = TableRepository.getTable(InputView.inputTableNumber());
+        OutputView.printMenus(MenuRepository.menus());
+
+        final Menu menu = MenuRepository.getMenuByNumber(InputView.inputMenuNumber());
+        final Quantity quantity = Quantity.valueOf(InputView.inputQuantity());
+        final OrderMenu orderMenu = new OrderMenu(menu, quantity);
+        orders.addOrder(tableNumber, orderMenu);
+    }
+
     private void startPayment() {
         OutputView.printTables(TableRepository.tables());
 
         int tableNumber = InputView.inputPaymentTableNumber();
+        final Order order = orders.findByTableNumber(tableNumber);
         int paymentMethodNumber = InputView.inputPaymentMethod(tableNumber);
 
-        PaymentType paymentMethod = getPaymentMethod(paymentMethodNumber);
-        Table table = TableRepository.getTable(tableNumber);
+        PaymentType paymentMethod = PaymentType.findByNumber(paymentMethodNumber);
+        DiscountConditions discountConditions = paymentMethod.getDiscountConditions();
 
-        OutputView.printPaymentAmount(pos.getPaymentAmount(table, paymentMethod));
-    }
-
-    private PaymentType getPaymentMethod(final int paymentMethodNumber) {
-        if (paymentMethodNumber == 1) {
-            return PaymentType.CARD;
-        }
-
-        return PaymentType.CASH;
-    }
-
-    private void startOrder() {
-        OutputView.printTables(TableRepository.tables());
-        final int tableNumber = InputView.inputTableNumber();
-        OutputView.printMenus(MenuRepository.menus());
-
-        final int menuNumber = InputView.inputMenuNumber();
-        final int quantity = InputView.inputQuantity();
-
-        final Menu selectedMenu = MenuRepository.getMenuByNumber(menuNumber);
-        pos.order(TableRepository.getTable(tableNumber), new OrderMenu(selectedMenu, quantity));
+        OutputView.printPaymentAmount(discountConditions.getDiscountAmount(order));
+        orders.remove(order);
     }
 }

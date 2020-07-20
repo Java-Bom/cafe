@@ -23,6 +23,15 @@ public class Menu {
         return amount.getAmount();
     }
 
+    public boolean isSameCategory(final Category category) {
+        return this.category.equals(category);
+    }
+
+    public Amount getTotalAmount(final int value) {
+        return amount.multiplyValue(value);
+    }
+
+
     @Override
     public String toString() {
         return category + " " + number + " - " + name + " : " + amount + "원";

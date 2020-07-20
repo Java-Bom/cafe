@@ -1,8 +1,12 @@
 package domain.menu;
 
+import domain.vo.Amount;
+import domain.vo.Quantity;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class OrderMenus {
 
@@ -13,10 +17,8 @@ public class OrderMenus {
     }
 
     public boolean containsOrderMenu(final OrderMenu newOrderMenu) {
-        long count = orderMenus.stream()
-                .filter(orderMenu -> orderMenu.isSameMenu(newOrderMenu))
-                .count();
-        return count > 0;
+        return orderMenus.stream()
+                .anyMatch(orderMenu -> orderMenu.isSameMenu(newOrderMenu));
     }
 
     public void addMenu(final OrderMenu orderMenu) {
@@ -33,10 +35,39 @@ public class OrderMenus {
         return orderMenus.stream()
                 .filter(orderMenu -> orderMenu.isSameMenu(newOrder))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 주문입니다."));
     }
 
-    public List<OrderMenu> getOrderMenus() {
-        return Collections.unmodifiableList(orderMenus);
+    private Quantity getQuantityByCategory(final Category discountCategory) {
+        List<Quantity> quantities = orderMenus.stream()
+                .filter(orderMenu -> orderMenu.isSameCategory(discountCategory))
+                .map(OrderMenu::getQuantity)
+                .collect(Collectors.toList());
+        return Quantity.sum(quantities);
+    }
+
+    public Amount getTotalAmount() {
+        Amount amount = Amount.valueOf(0);
+
+        for (OrderMenu orderMenu : orderMenus) {
+            amount = amount.add(orderMenu.getTotalAmount());
+        }
+
+        return amount;
+    }
+
+    public Amount getDiscountAmount(final Quantity discountQuantity,
+                                    final Amount discountAmount,
+                                    final Category discountCategory) {
+        Amount totalAmount = getTotalAmount();
+        Quantity quantity = getQuantityByCategory(discountCategory);
+        Quantity TotalDiscountQuantity = quantity.divideQuantity(discountQuantity);
+        Amount totalDiscountAmount = discountAmount.multiplyValue(TotalDiscountQuantity.getValue());
+        return totalAmount.subtractionAmount(totalDiscountAmount);
+    }
+
+    public Amount getDiscountAmount(final double discountRate) {
+        Amount totalAmount = getTotalAmount();
+        return totalAmount.multiplyValue(discountRate);
     }
 }

@@ -1,7 +1,5 @@
 package domain.menu;
 
-import domain.payment.DiscountCondition;
-import domain.payment.QuantityDiscountCondition;
 import domain.vo.Amount;
 import domain.vo.Quantity;
 
@@ -13,34 +11,29 @@ public class OrderMenu {
 
     private Quantity quantity;
 
-    public OrderMenu(final Menu menu, final int quantity) {
+    public OrderMenu(final Menu menu, final Quantity quantity) {
         this.menu = menu;
-        this.quantity = Quantity.valueOf(quantity);
+        this.quantity = quantity;
     }
 
     public void extraOrder(final OrderMenu orderMenu) {
         this.quantity = quantity.addQuantity(orderMenu.quantity);
     }
 
-    public Amount calculateDiscountAmount(DiscountCondition discountCondition) {
-        int value = quantity.getValue();
-        Amount amount = menu.getAmount().multiplyValue(value);
-        Quantity discountQuantity = quantity.divideQuantity(QuantityDiscountCondition.DISCOUNT_QUANTITY);
-
-        for (int i = 0; i < discountQuantity.getValue(); i++) {
-            amount = discountCondition.getDiscountAmount(amount);
-        }
-
-        return amount;
-    }
-
-
     public boolean isSameMenu(final OrderMenu orderMenu) {
         return this.menu.equals(orderMenu.menu);
     }
 
+    public boolean isSameCategory(Category category) {
+        return menu.isSameCategory(category);
+    }
+
     public Quantity getQuantity() {
         return quantity;
+    }
+
+    public Amount getTotalAmount() {
+        return this.menu.getTotalAmount(quantity.getValue());
     }
 
     @Override
@@ -56,4 +49,5 @@ public class OrderMenu {
     public int hashCode() {
         return Objects.hash(menu, getQuantity());
     }
+
 }

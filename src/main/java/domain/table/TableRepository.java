@@ -26,11 +26,10 @@ public class TableRepository {
     }
 
     private static void validTableNumber(final int tableNumber) {
-        long count = tables().stream()
-                .filter(table -> table.getNumber() == tableNumber)
-                .count();
+        boolean hasNumber = tables().stream()
+                .anyMatch(table -> table.isSameNumber(tableNumber));
 
-        if (count <= 0) {
+        if (!hasNumber) {
             throw new IllegalArgumentException(
                     String.format("입력한 테이블 번호 : %d - 해당 테이블 번호는 존재하지 않습니다.", tableNumber));
         }

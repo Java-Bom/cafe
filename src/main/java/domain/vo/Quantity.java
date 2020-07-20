@@ -1,6 +1,7 @@
 package domain.vo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Quantity {
@@ -22,13 +23,21 @@ public class Quantity {
     }
 
     public static Quantity valueOf(int value) {
-        validQuantityValue(value);
+        return QuantityCache.getQuantity(value);
+    }
+
+    public static Quantity sum(final List<Quantity> quantities) {
+        int value = 0;
+
+        for (Quantity quantity : quantities) {
+            value += quantity.value;
+        }
+
         return QuantityCache.getQuantity(value);
     }
 
     public Quantity addQuantity(final Quantity quantity) {
         int totalValue = this.value + quantity.value;
-
         return QuantityCache.getQuantity(totalValue);
     }
 
@@ -55,6 +64,7 @@ public class Quantity {
         }
 
         private static Quantity getQuantity(final int value) {
+            validQuantityValue(value);
             return CACHE.get(value);
         }
     }

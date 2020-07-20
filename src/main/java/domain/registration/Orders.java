@@ -1,5 +1,6 @@
 package domain.registration;
 
+import domain.menu.OrderMenu;
 import domain.table.Table;
 
 import java.util.ArrayList;
@@ -9,19 +10,39 @@ public class Orders {
 
     private final List<Order> orders = new ArrayList<>();
 
-    public void addOrder(final Order order) {
-        orders.add(order);
+    public void addOrder(final Table table, final OrderMenu orderMenu) {
+        Order order = Order.of(table, orderMenu);
+
+        if (!contains(order)) {
+            Order previousOrderTable = findOrder(order);
+            previousOrderTable.addMenu(orderMenu);
+        }
+
+        this.orders.add(order);
     }
 
-    public Order getOrderByTable(final Table table) {
+    private boolean contains(final Order newOrder) {
         return orders.stream()
-                .filter(order -> order.isSameByTable(table))
+                .anyMatch(order -> order.isSameTable(newOrder));
+    }
+
+    public Order findOrder(final Order order) {
+        return orders.stream()
+                .filter(previousOrder -> previousOrder.isSameTable(order))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(("주문한 적이 없습니다.")));
+    }
+
+
+    public Order findByTableNumber(final int tableNumber) {
+        return orders.stream()
+                .filter(order -> order.isSameTableNumber(tableNumber))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("선택한 테이블 : %d - 해당 테이블은 주문한적이 없습니다.", table.getNumber())));
+                        String.format("입력한 테이블 번호 : %d, 해당 테이블은 존재하지 않습니다.", tableNumber)));
     }
 
-    public void remove(final Order orderByTable) {
-        orders.remove(orderByTable);
+    public void remove(final Order order) {
+        orders.remove(order);
     }
 }
