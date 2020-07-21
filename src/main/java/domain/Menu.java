@@ -1,10 +1,35 @@
 package domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Menu {
-    private final int number;
-    private final String name;
-    private final Category category;
-    private final int price;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private int number;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Category category;
+
+    @Column(nullable = false)
+    private int price;
+
+    public Menu() {
+    }
 
     public Menu(final int number, final String name, final Category category, final int price) {
         this.number = number;
