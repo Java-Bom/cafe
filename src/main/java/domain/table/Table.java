@@ -1,4 +1,4 @@
-package domain;
+package domain.table;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
