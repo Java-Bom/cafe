@@ -1,11 +1,15 @@
 package domain;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@NoArgsConstructor
 @Entity
 public class Table {
 
@@ -16,9 +20,7 @@ public class Table {
     @Column(nullable = false)
     private int number;
 
-    public Table() {
-    }
-
+    @Builder
     public Table(final int number) {
         this.number = number;
     }

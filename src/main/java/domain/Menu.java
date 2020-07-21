@@ -1,5 +1,8 @@
 package domain;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@NoArgsConstructor
 @Entity
 public class Menu {
 
@@ -28,9 +32,7 @@ public class Menu {
     @Column(nullable = false)
     private int price;
 
-    public Menu() {
-    }
-
+    @Builder
     public Menu(final int number, final String name, final Category category, final int price) {
         this.number = number;
         this.name = name;
