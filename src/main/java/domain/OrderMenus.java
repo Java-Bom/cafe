@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class OrderMenus {
     private List<Menu> getMenuKinds() {
         return this.menus.stream()
                 .distinct()
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 
     public boolean isNotEmpty() {
@@ -52,7 +53,7 @@ public class OrderMenus {
     public List<OrderDetail> getOrderDetails() {
         return getMenuKinds().stream()
                 .map(menu -> new OrderDetail(menu, getMenuQuantityOf(menu)))
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 
     public int getTotalPrice(Payment payment) {
