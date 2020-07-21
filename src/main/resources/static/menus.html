@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>자바봄 CAFFE POS</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
+            rel="stylesheet"
+    />
+    <link href="css/pos.css" rel="stylesheet"/>
+    <link href="css/menus.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-200 h-screen">
+<div class="flex justify-center items-center app-container">
+    <div class="text-center">
+        <div class="flex justify-center md:py-10 lg:py-10 app-container">
+            <div class="max-w-md width-450px rounded bg-white shadow-lg p-6">
+                <div class="font-bold text-xl mb-3 text-center">메뉴 관리</div>
+                <form>
+                    <div class="mb-4 text-left">
+                        <input
+                                autocomplete="off"
+                                class="appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                                id="menu-name"
+                                placeholder="메뉴 이름"
+                                type="text"
+                        />
+                        <select
+                                class="appearance-none bg-white border w-50 border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                                id="menu-type-select"
+                        >
+                        </select>
+                        <input
+                                autocomplete="off"
+                                class="appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-30"
+                                id="menu-price"
+                                placeholder="가격"
+                                type="text"
+                        />
+                        <button
+                                class="inline-block text-sm bg-yellow-500 hover:bg-yellow-400 hover:text-gray-700 text-gray-800 font-bold py-2 px-4 rounded"
+                                id="menu-add-btn"
+                        >
+                            추가
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-5 flex menu-list-container relative overflow-y-auto">
+                    <div class="w-full" id="menu-list">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/posApp.js" type="module"></script>
+<script src="js/menus.js" type="module"></script>
+</body>
+</html>
