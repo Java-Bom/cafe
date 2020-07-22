@@ -3,7 +3,7 @@ package domain.enums;
 import domain.discount.AmountDiscountPolicy;
 import domain.discount.DiscountPolicy;
 import domain.discount.PercentDiscountPolicy;
-import domain.menu.Menus;
+import domain.order.Orders;
 import domain.vo.Money;
 
 import java.util.Arrays;
@@ -35,10 +35,10 @@ public enum PayType {
         return this.type == paymentMethod;
     }
 
-    public Money calculateDiscountFee(Menus menus) {
-        Money amount = menus.getAmount();
+    public Money calculateDiscountFee(Orders orders) {
+        Money amount = orders.getAmount();
         for (DiscountPolicy policy : this.discountPolicies) {
-            amount = amount.minus(policy.getDiscountAmount(menus, amount));
+            amount = amount.minus(policy.getDiscountAmount(orders, amount));
         }
         return amount;
     }

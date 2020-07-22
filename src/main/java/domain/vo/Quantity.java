@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Quantity {
-    public static final int MIN_QUANTITY = 0;
+    public static final int MIN_QUANTITY = 1;
     public static final int MAX_QUANTITY = 30;
-    public static final Quantity ZERO = Quantity.of(0);
+    public static final Quantity ZERO = new Quantity(0);
 
     private final int quantity;
 

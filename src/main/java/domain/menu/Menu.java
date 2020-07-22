@@ -30,6 +30,10 @@ public class Menu {
         return this.price * quantity.get();
     }
 
+    public boolean equalsOf(String name) {
+        return this.name.equals(name);
+    }
+
     public boolean equalsOf(Category category) {
         return this.category.equals(category);
     }

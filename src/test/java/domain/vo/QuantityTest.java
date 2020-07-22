@@ -10,9 +10,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QuantityTest {
 
-    @DisplayName("수량이 0-30이 아니면 IllegalArgumentException을 발생시킨다.")
+    @DisplayName("수량이 1-30이 아니면 IllegalArgumentException을 발생시킨다.")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 31})
+    @ValueSource(ints = {0, 31})
     void checkRange(int quantity) {
         //then
         assertThatThrownBy(() -> Quantity.of(quantity))

@@ -1,14 +1,14 @@
 package domain;
 
-import domain.menu.Menu;
 import domain.menu.MenuRepository;
-import domain.menu.Menus;
-import domain.table.Table;
-import domain.table.TableRepository;
+import domain.order.Order;
+import domain.vo.Quantity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,11 +26,11 @@ class POSTest {
 
         //when
         pos.takeOrder(tableNumber, menuIdx, quantity);
-        Menus actual = pos.findOrderHistoryOf(tableNumber);
-        Menu expected = MenuRepository.find(menuIdx);
+        List<Order> actual = pos.findOrderHistoryOf(tableNumber);
+        Order expected = new Order(MenuRepository.find(menuIdx), Quantity.of(quantity));
 
         //then
-        assertThat(actual.get().containsKey(expected)).isTrue();
+        assertThat(actual.contains(expected)).isTrue();
     }
 
     @DisplayName("테이블에 메뉴를 주문한 적이 없으면 IllegalArgumentException을 발생시킨다.")
@@ -75,8 +75,7 @@ class POSTest {
 
         //when
         pos.clearOf(tableNumber);
-        Table table = TableRepository.find(tableNumber);
-        Menus actual = pos.get().get(table);
+        List<Order> actual = pos.findOrderHistoryOf(tableNumber);
 
         //then
         assertThat(actual.isEmpty()).isTrue();

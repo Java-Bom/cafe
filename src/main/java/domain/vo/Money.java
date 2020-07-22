@@ -23,11 +23,11 @@ public class Money {
     }
 
     public Money divide(final int number) {
-        checkBottom(number);
+        checkDivideValue(number);
         return Money.of(this.fee / number);
     }
 
-    private void checkBottom(final int number) {
+    private void checkDivideValue(final int number) {
         if (number == 0) {
             throw new IllegalArgumentException(String.format("숫자:%d, 0이 들어오면 안됩니다.", number));
         }

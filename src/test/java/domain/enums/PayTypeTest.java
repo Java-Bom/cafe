@@ -1,6 +1,9 @@
 package domain.enums;
 
-import domain.menu.Menus;
+import domain.menu.MenuRepository;
+import domain.order.Order;
+import domain.order.Orders;
+import domain.vo.Quantity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,11 +44,12 @@ class PayTypeTest {
     @CsvSource({"CARD, 18000", "CASH, 16200"})
     void calculateDiscountFee(PayType payType, int expected) {
         //given
-        Menus menus = new Menus();
-        menus.addMenu(1, 3);
+        Orders orders = new Orders();
+        Order order = new Order(MenuRepository.find(1), Quantity.of(3));
+        orders.add(order);
 
         //when
-        int actual = payType.calculateDiscountFee(menus).get();
+        int actual = payType.calculateDiscountFee(orders).get();
 
         //then
         assertThat(actual).isEqualTo(expected);

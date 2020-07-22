@@ -2,13 +2,11 @@ package view;
 
 import domain.POS;
 import domain.menu.Menu;
-import domain.menu.Menus;
+import domain.order.Order;
 import domain.table.Table;
 import domain.vo.Money;
-import domain.vo.Quantity;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final String TOP_LINE = "┌ ─ ┐";
@@ -16,12 +14,11 @@ public class OutputView {
     private static final String NONE_ORDER_BOTTOM_LINE = "└ ─ ┘";
     private static final String ORDER_BOTTOM_LINE = "└ $ ┘";
 
-    public static void printTables(final POS POS) {
+    public static void printTables(final List<Table> tables, final POS POS) {
         System.out.println("## 테이블 목록");
-        Map<Table, domain.menu.Menus> tables = POS.get();
         printLine(TOP_LINE, tables.size());
         printTableNumbers(tables);
-        printTableBottomLine(tables);
+        printTableBottomLine(tables, POS);
     }
 
     public static void printMainView() {
@@ -44,17 +41,17 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printTableNumbers(final Map<Table, Menus> tables) {
-        for (final Table table : tables.keySet()) {
+    private static void printTableNumbers(final List<Table> tables) {
+        for (final Table table : tables) {
             System.out.printf(TABLE_FORMAT, table);
         }
         System.out.println();
     }
 
-    private static void printTableBottomLine(final Map<Table, Menus> tables) {
-        for (Table table : tables.keySet()) {
-            domain.menu.Menus menus = tables.get(table);
-            if (menus.isEmpty()) {
+    private static void printTableBottomLine(final List<Table> tables, final POS POS) {
+        for (Table table : tables) {
+            List<Order> orders = POS.findOrderHistoryOf(table.get());
+            if (orders.isEmpty()) {
                 System.out.print(NONE_ORDER_BOTTOM_LINE);
             } else {
                 System.out.print(ORDER_BOTTOM_LINE);
@@ -63,13 +60,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printOrderHistory(final Menus menus) {
-        Map<Menu, Quantity> orderHistory = menus.get();
-
+    public static void printOrderHistory(final List<Order> orderList) {
         System.out.println("## 주문 내역");
         System.out.println("메뉴 수량 금액");
-        for (Menu menu : orderHistory.keySet()) {
-            System.out.println(menu.getName() + " " + menu.getPrice() + " " + orderHistory.get(menu).get());
+        for (Order order : orderList) {
+            Menu menu = order.getMenu();
+            System.out.println(menu.getName() + " " + order.getQuantityBy(menu.getName()) + " " + menu.getPrice());
         }
     }
 

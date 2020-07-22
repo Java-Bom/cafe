@@ -1,8 +1,8 @@
 package domain.discount;
 
-import domain.menu.Menus;
+import domain.order.Orders;
 import domain.vo.Money;
 
 public interface DiscountPolicy {
-    Money getDiscountAmount(Menus menus, Money amount);
+    Money getDiscountAmount(Orders orders, Money amount);
 }

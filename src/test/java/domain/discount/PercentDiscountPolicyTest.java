@@ -1,14 +1,14 @@
 package domain.discount;
 
-import domain.menu.Menus;
+import domain.menu.MenuRepository;
+import domain.order.Order;
+import domain.order.Orders;
+import domain.vo.Quantity;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PercentDiscountPolicyTest {
 
@@ -18,11 +18,12 @@ class PercentDiscountPolicyTest {
     void getDiscountAmount(int menuIdx, int quantity, int expected) {
         //given
         DiscountPolicy discountPolicy = new PercentDiscountPolicy();
-        Menus menus = new Menus();
-        menus.addMenu(menuIdx, quantity);
+        Orders orders = new Orders();
+        Order order = new Order(MenuRepository.find(menuIdx), Quantity.of(quantity));
+        orders.add(order);
 
         //when
-        int actual = discountPolicy.getDiscountAmount(menus, menus.getAmount()).get();
+        int actual = discountPolicy.getDiscountAmount(orders, orders.getAmount()).get();
 
         //then
         assertThat(actual).isEqualTo(expected);

@@ -1,6 +1,8 @@
 import domain.POS;
 import domain.menu.Menu;
 import domain.menu.MenuRepository;
+import domain.table.Table;
+import domain.table.TableRepository;
 import view.InputView;
 import view.OutputView;
 
@@ -10,6 +12,7 @@ public class Application {
     // TODO 구현 진행
     public static void main(String[] args) {
         final List<Menu> menus = MenuRepository.findAll();
+        final List<Table> tables = TableRepository.findAll();
         POS pos = new POS();
 
         int function = 0;
@@ -18,7 +21,7 @@ public class Application {
             function = InputView.inputFunction();
 
             if (function == 1) {
-                OutputView.printTables(pos);
+                OutputView.printTables(tables, pos);
                 int tableNumber = InputView.inputTableNumber();
                 OutputView.printMenus(menus);
                 int menuIdx = InputView.inputMenuIdx();

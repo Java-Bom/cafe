@@ -22,7 +22,7 @@ class MoneyTest {
 
     @DisplayName("나누는 숫자가 0이면 IllegalArgumentException을 발생시킨다.")
     @Test
-    void checkBottom() {
+    void checkDivideValue() {
         //given
         Money money = Money.of(1000);
         int number = 0;

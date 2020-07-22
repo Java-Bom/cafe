@@ -13,6 +13,14 @@ public class Table {
         return this.number == number;
     }
 
+    public boolean equalsOf(final Table table) {
+        return this.number == table.number;
+    }
+
+    public int get() {
+        return this.number;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
