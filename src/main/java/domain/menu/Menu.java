@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Entity
@@ -43,5 +44,21 @@ public class Menu {
     @Override
     public String toString() {
         return category + " " + number + " - " + name + " : " + price + "원";
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Menu)) return false;
+        Menu menu = (Menu) o;
+        return number == menu.number &&
+                price == menu.price &&
+                Objects.equals(name, menu.name) &&
+                category == menu.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, name, category, price);
     }
 }
