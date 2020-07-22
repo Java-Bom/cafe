@@ -1,7 +1,8 @@
 package view;
 
-import domain.Menu;
-import domain.Table;
+import domain.menu.Menu;
+import domain.table.Table;
+import domain.vo.Amount;
 
 import java.util.List;
 
@@ -11,11 +12,18 @@ public class OutputView {
     private static final String BOTTOM_LINE = "└ ─ ┘";
 
     public static void printTables(final List<Table> tables) {
+        System.out.println();
         System.out.println("## 테이블 목록");
         final int size = tables.size();
         printLine(TOP_LINE, size);
         printTableNumbers(tables);
         printLine(BOTTOM_LINE, size);
+    }
+
+    public static void printPaymentAmount(final Amount amount) {
+        System.out.println();
+        System.out.println("## 최종 결제 금액");
+        System.out.println(amount.getAmount().toString());
     }
 
     public static void printMenus(final List<Menu> menus) {
@@ -37,4 +45,5 @@ public class OutputView {
         }
         System.out.println();
     }
+
 }
