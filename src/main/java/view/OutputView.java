@@ -1,8 +1,8 @@
 package view;
 
-import domain.Menu;
-import domain.OrderDetail;
-import domain.Table;
+import com.javabom.cafe.domain.Menu;
+import com.javabom.cafe.domain.OrderDetail;
+import com.javabom.cafe.domain.Table;
 
 import java.util.List;
 

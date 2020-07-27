@@ -1,11 +1,9 @@
-import domain.*;
+import com.javabom.cafe.domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
-import static domain.MenuRepository.findMenuByNumber;
-import static domain.TableRepository.findTableByNumber;
+import static com.javabom.cafe.domain.MenuRepository.findMenuByNumber;
+import static com.javabom.cafe.domain.TableRepository.findTableByNumber;
 
 public class Application {
     private static final int ORDER = 1;
@@ -14,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        final Cafe cafe = new Cafe();
+        final Cafe cafe = new Cafe(TableRepository.tables(), MenuRepository.menus());
         int tableNumber;
         int menuNumber;
         int selectedFunction;

@@ -1,16 +1,18 @@
-package domain;
+package com.javabom.cafe.domain;
 
 import java.util.Collections;
 import java.util.List;
 
-import static domain.MenuRepository.findMenuByNumber;
-import static domain.TableRepository.findTableByNumber;
-
 public class Cafe {
 
-    private final List<Table> tables = TableRepository.tables();
-    private final List<Menu> menus = MenuRepository.menus();
+    private final List<Table> tables;
+    private final List<Menu> menus;
     private boolean isOpen = true;
+
+    public Cafe(List<Table> tables, List<Menu> menus) {
+        this.tables = tables;
+        this.menus = menus;
+    }
 
     public List<Table> getTables() {
         return Collections.unmodifiableList(tables);
@@ -28,10 +30,40 @@ public class Cafe {
         this.isOpen = false;
     }
 
+    public void addTable(final Table table) {
+        tables.add(table);
+    }
+
+    public void deleteTable(final int tableNumber) {
+        tables.removeIf(table -> table.getNumber() == tableNumber);
+    }
+
+    public void addMenu(final Menu menu) {
+        menus.add(menu);
+    }
+
+    public void deleteMenu(final int menuNumber) {
+        menus.removeIf(menu -> menu.getNumber() == menuNumber);
+    }
+
     public void orderMenu(final int tableNumber, final int menuNumber, final int menuQuantity) {
         Table table = findTableByNumber(tableNumber);
         Menu menu = findMenuByNumber(menuNumber);
         table.addMenu(menu, menuQuantity);
+    }
+
+    private Table findTableByNumber(final int tableNumber) {
+        return this.tables.stream()
+                .filter(table -> table.getNumber() == tableNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d번 테이블은 존재하지 않습니다.", tableNumber)));
+    }
+
+    private Menu findMenuByNumber(int menuNumber) {
+        return this.menus.stream()
+                .filter(menu -> menu.getNumber() == menuNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d번 메뉴는 존재하지 않습니다.", menuNumber)));
     }
 
     public List<OrderDetail> getOrderMenusTableOf(final int tableNumber) {

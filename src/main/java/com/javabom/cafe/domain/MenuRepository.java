@@ -1,4 +1,4 @@
-package domain;
+package com.javabom.cafe.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package domain;
+package com.javabom.cafe.domain;
 
 public enum Category {
     CAKE("케이크"),

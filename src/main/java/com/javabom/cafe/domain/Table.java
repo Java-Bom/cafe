@@ -1,13 +1,28 @@
-package domain;
+package com.javabom.cafe.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Table {
-    private final int number;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int number;
+
+    private String name;
+
+    @OneToOne
     private OrderMenus orderMenus = OrderMenus.empty();
 
-    public Table(final int number) {
-        this.number = number;
+    public Table() {
+    }
+
+    public Table(final String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getNumber() {
@@ -26,11 +41,11 @@ public class Table {
         return orderMenus.getOrderDetails();
     }
 
-    public void clear(){
+    public void clear() {
         this.orderMenus = OrderMenus.empty();
     }
 
-    public int getTotalPrice(Payment payment){
+    public int getTotalPrice(Payment payment) {
         return this.orderMenus.getTotalPrice(payment);
     }
 

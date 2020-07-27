@@ -1,18 +1,25 @@
-package domain;
+package com.javabom.cafe.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OrderMenus {
+@Entity
+public class OrderMenus implements Serializable {
     private static final int DISCOUNT_CAKE_COUNT = 3;
     private static final int DISCOUNT_CAKE_PRICE = 3000;
     private static final int MAX_ONE_MENU_QUANTITY = 30;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private int id;
+
+    @OneToMany
     private final List<Menu> menus = new ArrayList<>();
 
-    private OrderMenus() {
+    public OrderMenus() {
     }
 
     public static OrderMenus empty() {
