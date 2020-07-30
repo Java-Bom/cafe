@@ -1,12 +1,17 @@
 package domain.order;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
+@NoArgsConstructor
 @Getter
 public class Quantity {
     private static final int MIN_QUANTITY = 1;
 
-    private final int value;
+    private int value;
 
     public Quantity(final int value) {
         validateQuantity(value);
