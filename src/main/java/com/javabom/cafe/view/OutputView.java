@@ -1,7 +1,8 @@
-package view;
+package com.javabom.cafe.view;
 
-import domain.Menu;
-import domain.Table;
+import com.javabom.cafe.domain.menu.Menu;
+import com.javabom.cafe.domain.table.CafeTable;
+import com.javabom.cafe.domain.vo.Amount;
 
 import java.util.List;
 
@@ -10,12 +11,19 @@ public class OutputView {
     private static final String TABLE_FORMAT = "| %s |";
     private static final String BOTTOM_LINE = "└ ─ ┘";
 
-    public static void printTables(final List<Table> tables) {
+    public static void printTables(final List<CafeTable> cafeTables) {
+        System.out.println();
         System.out.println("## 테이블 목록");
-        final int size = tables.size();
+        final int size = cafeTables.size();
         printLine(TOP_LINE, size);
-        printTableNumbers(tables);
+        printTableNumbers(cafeTables);
         printLine(BOTTOM_LINE, size);
+    }
+
+    public static void printPaymentAmount(final Amount amount) {
+        System.out.println();
+        System.out.println("## 최종 결제 금액");
+        System.out.println(amount.toString());
     }
 
     public static void printMenus(final List<Menu> menus) {
@@ -31,10 +39,11 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printTableNumbers(final List<Table> tables) {
-        for (final Table table : tables) {
-            System.out.printf(TABLE_FORMAT, table);
+    private static void printTableNumbers(final List<CafeTable> cafeTables) {
+        for (final CafeTable cafeTable : cafeTables) {
+            System.out.printf(TABLE_FORMAT, cafeTable);
         }
         System.out.println();
     }
+
 }
