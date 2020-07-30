@@ -1,4 +1,4 @@
-package com.javabom.cafe.domain;
+package domain;
 
 public class OrderDetail {
     private final Menu menu;

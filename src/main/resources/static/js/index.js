@@ -48,16 +48,9 @@ function PosApp() {
     }
 
     const initTables = () => {
-        //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        initPosTables(api.table.get().then(response => {
-
-        }));
-
         api.table.get().then(response => {
             initPosTables(response)
         })
-
-        // mockPostable 을 실제 대이터로 치환
     }
 
     const init = () => {

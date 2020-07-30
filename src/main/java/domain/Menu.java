@@ -1,24 +1,13 @@
-package com.javabom.cafe.domain;
+package domain;
 
-import javax.persistence.*;
-
-@Entity
 public class Menu {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int number;
+    private final int number;
+    private final String name;
+    private final Category category;
+    private final int price;
 
-    private String name;
-
-    @Enumerated(EnumType.STRING)
-    private Category category;
-
-    private int price;
-
-    public Menu() {
-    }
-
-    public Menu(final String name, final Category category, final int price) {
+    public Menu(final int number, final String name, final Category category, final int price) {
+        this.number = number;
         this.name = name;
         this.category = category;
         this.price = price;

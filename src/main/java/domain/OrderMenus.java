@@ -1,4 +1,4 @@
-package com.javabom.cafe.domain;
+package domain;
 
 import javax.persistence.*;
 import java.io.Serializable;

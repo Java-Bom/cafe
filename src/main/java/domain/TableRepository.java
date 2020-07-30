@@ -1,4 +1,4 @@
-package com.javabom.cafe.domain;
+package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,12 +8,12 @@ public class TableRepository {
     private static final List<Table> tables = new ArrayList<>();
 
     static {
-        tables.add(new Table("1"));
-        tables.add(new Table("2"));
-        tables.add(new Table("3"));
-        tables.add(new Table("5"));
-        tables.add(new Table("7"));
-        tables.add(new Table("8"));
+        tables.add(new Table(1,"1"));
+        tables.add(new Table(2,"2"));
+        tables.add(new Table(3,"3"));
+        tables.add(new Table(5,"5"));
+        tables.add(new Table(7,"7"));
+        tables.add(new Table(8,"8"));
     }
 
     public static List<Table> tables() {

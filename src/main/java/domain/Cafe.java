@@ -1,4 +1,4 @@
-package com.javabom.cafe.domain;
+package domain;
 
 import java.util.Collections;
 import java.util.List;

@@ -9,17 +9,17 @@ const navTemplate = `<nav class="flex items-center justify-between flex-wrap bg-
       </a>
     <div class="flex justify-start">
       <div class="hover:bg-blue-900 px-2 py-1 rounded">
-         <a href="/menus" class="block inline-block lg:mt-0 text-white text-sm">
+         <a href="../../menus.html" class="block inline-block lg:mt-0 text-white text-sm">
           메뉴 관리
           </a>
       </div>
       <div class="hover:bg-blue-900 px-2 py-1 rounded">
-         <a href="/tables" class="block inline-block lg:mt-0 text-white text-sm">
+         <a href="../../table.html" class="block inline-block lg:mt-0 text-white text-sm">
           테이블 관리
           </a>
       </div>
       <div class="hover:bg-blue-900 px-2 py-1 rounded">
-          <a href="/sales" class="block inline-block lg:mt-0 text-white text-sm">
+          <a href="../../sales.html" class="block inline-block lg:mt-0 text-white text-sm">
           매출 관리
           </a>
       </div>

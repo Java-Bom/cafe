@@ -1,12 +1,13 @@
 package com.javabom.cafe.controller;
 
 
+import com.javabom.cafe.dtos.CreateTableDto;
+import com.javabom.cafe.dtos.ShownTable;
 import com.javabom.cafe.service.CafeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cafe")
@@ -19,9 +20,15 @@ public class CafeController {
     }
 
     @PostMapping("/table")
-    public ResponseEntity createTable(String tableName) {
-        cafeService.createTable(tableName);
+    public ResponseEntity createTable(@RequestBody CreateTableDto dto) {
+        cafeService.createTable(dto);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/tables")
+    public ResponseEntity<List<ShownTable>> showAllTables() {
+        List<ShownTable> tables = cafeService.findAllTables();
+        return ResponseEntity.ok(tables);
     }
 
 

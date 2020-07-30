@@ -1,5 +1,6 @@
-package com.javabom.cafe.domain;
+package com.javabom.cafe;
 
+import domain.Payment;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

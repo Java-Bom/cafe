@@ -1,9 +1,9 @@
-import com.javabom.cafe.domain.*;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import static com.javabom.cafe.domain.MenuRepository.findMenuByNumber;
-import static com.javabom.cafe.domain.TableRepository.findTableByNumber;
+import static domain.MenuRepository.findMenuByNumber;
+import static domain.TableRepository.findTableByNumber;
 
 public class Application {
     private static final int ORDER = 1;

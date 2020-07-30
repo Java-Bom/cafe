@@ -1,14 +1,14 @@
 package com.javabom.cafe.repository;
 
-import com.javabom.cafe.domain.Table;
+import com.javabom.cafe.entity.CafeTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TablesRepository extends JpaRepository<Table, Integer> {
+public interface TablesRepository extends JpaRepository<CafeTable, Integer> {
 
-    List<Table> findAll();
+    List<CafeTable> findAll();
 
-    void deleteTableByNumber(int tableNumber);
+    void deleteTableById(int tableId);
 
 }

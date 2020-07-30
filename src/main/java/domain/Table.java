@@ -1,23 +1,14 @@
-package com.javabom.cafe.domain;
+package domain;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
 public class Table {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int number;
-
-    private String name;
-
-    @OneToOne
+    private final int number;
+    private final String name;
     private OrderMenus orderMenus = OrderMenus.empty();
 
-    public Table() {
-    }
-
-    public Table(final String name) {
+    public Table(final int number, final String name) {
+        this.number = number;
         this.name = name;
     }
 
