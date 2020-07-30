@@ -1,13 +1,16 @@
 import {initSales} from "./utils/templates.js";
 import {mockSales} from "./utils/mockData.js";
-
+import {api} from "./api/index.js"
 
 function SalesApp() {
 
     const initSalesList = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        initSales(mockSales);
-    }
+        api.payment
+            .getAll()
+            .then(response => response.json())
+            .then(data => initSales(data));
+    };
 
     const init = () => {
         initSalesList();

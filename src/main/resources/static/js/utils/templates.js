@@ -1,6 +1,6 @@
 export const initNavigation = () => {
     document.querySelector('body').insertAdjacentHTML('afterBegin', navTemplate)
-}
+};
 
 const navTemplate = `<nav class="flex items-center justify-between flex-wrap bg-blue-800 p-4">
   <div class="flex items-center flex-shrink-0 text-gray-800 w-full">
@@ -24,43 +24,44 @@ const navTemplate = `<nav class="flex items-center justify-between flex-wrap bg-
           </a>
       </div>
     </div>
-</nav>`
+</nav>`;
 
 export const initPosTables = (data) => {
-    const tableItems = data ? data.map(table => posTableTemplate(table)).join('') : null
-    document.querySelector('.table-container').insertAdjacentHTML('afterBegin', tableItems)
-}
+    const tableItems = data ? data.map(table => posTableTemplate(table)).join('') : null;
+    document.querySelector('.table-container').insertAdjacentHTML('afterBegin', tableItems);
+};
 
 const posTableTemplate = (data) => {
-    const orderStatus = data.orderStatus ? '$$$$' : ''
+    const orderStatus = data.orderStatus !== 'EMPTY'? '$$$$' : '';
     return `<div class="table border-1 round p-3 " data-id="${data.tableId}">
                 <div class="table-name modal-open bg-transparent hover:bg-blue-300">${data.tableName}</div>
                 <div class="order-container">
                     ${orderStatus}
                 </div>
             </div>`
-}
+};
 
 export const initMenu = (data) => {
-    const menuItems = data ? data.map(menu => menuTemplate(menu)).join('') : null
+    const menuItems = data ? data.map(menu => menuTemplate(menu)).join('') : null;
     document.querySelector('#menu-list').insertAdjacentHTML('afterBegin', menuItems)
-}
+};
 
 const menuTemplate = (data) => {
     return `<div class="menu-item border border-gray-200 py-2 px-4 text-gray-800" data-id="${data.menuId}">
                                 <div class="menu-name float-left w-50">${data.menuName}</div>
                                 <div class="menu-price float-left pl-10">${data.price} 원</div>
                                 &nbsp
-                                <button class="hover:bg-gray-300 hover:text-gray-500 text-gray-300 px-1 rounded-full float-right">
+                                <button class="hover:bg-gray-300 hover:text-gray-500 text-gray-300 px-1 rounded-full float-right" 
+                                            id="menu-delete-btn">
                                     <span class="mdi mdi-delete"></span>
                                 </button>
                             </div>`
-}
+};
 
 export const initTable = (data) => {
-    const tableItems = data ? data.map(table => tableTemplate(table)).join('') : null
+    const tableItems = data ? data.map(table => tableTemplate(table)).join('') : null;
     document.querySelector('#table-list').insertAdjacentHTML('afterBegin', tableItems)
-}
+};
 
 const tableTemplate = (data) => {
     return `<div class="table-item border border-gray-200 py-2 px-4 text-gray-800" data-id="${data.tableId}">
@@ -70,12 +71,12 @@ const tableTemplate = (data) => {
                                     <span class="mdi mdi-delete"></span>
                                 </button>
                             </div>`
-}
+};
 
 export const initSales = (data) => {
-    const salesItems = data ? data.map(sale => salesTemplate(sale)).join('') : null
+    const salesItems = data ? data.map(sale => salesTemplate(sale)).join('') : null;
     document.querySelector('#sales-list').insertAdjacentHTML('afterBegin', salesItems)
-}
+};
 
 const salesTemplate = (data) => {
     return `<div class="sales-item border border-gray-200 py-2 px-4 text-gray-800" data-id="${data.salesId}">
@@ -85,18 +86,18 @@ const salesTemplate = (data) => {
                                 <div class="sales-price float-right pl-3">${data.price}</div>
                                 &nbsp
                             </div>`
-}
+};
 
 
 export const convertOrderItemTemplate = (data) => {
-    const orderItems = data ? data.map(order => orderItemTemplate(order)).join('') : null
+    const orderItems = data ? data.map(order => orderItemTemplate(order)).join('') : null;
     if (orderItems) {
-        document.querySelector('#order-list').insertAdjacentHTML('afterBegin', orderItems)
+        document.querySelector('#order-list').insertAdjacentHTML('afterBegin', orderItems);
         return
     }
     document.querySelector('#order-list').innerHTML = ''
 
-}
+};
 
 const orderItemTemplate = (data) => {
     return `<div class="order-item border border-gray-200 py-2 px-4 text-gray-800" data-id="${data.menuId}">
@@ -105,19 +106,19 @@ const orderItemTemplate = (data) => {
                 <div class="order-total-price float-left pl-10">${data.price}</div>
                 <span>원</span>
             </div>`
-}
+};
 
 export const initOrderMenuOption = (data) => {
-    const menuOptions = data ? data.map(menu => orderMenuOptionTemplate(menu)).join('') : null
+    const menuOptions = data ? data.map(menu => orderMenuOptionTemplate(menu)).join('') : null;
     document.querySelector('#menu-select-options').insertAdjacentHTML('afterBegin', menuOptions)
-}
+};
 
 
-export const orderMenuOptionTemplate = data => `<option value="${data.menuId}">${data.menuName}</option>`
+export const orderMenuOptionTemplate = data => `<option value="${data.menuId}">${data.menuName}</option>`;
 
 export const initMenuCategory = (data) => {
-    const categoryOptions = data ? data.map(category => categoryOptionTemplate(category)).join('') : null
+    const categoryOptions = data ? data.map(category => categoryOptionTemplate(category)).join('') : null;
     document.querySelector('#menu-type-select').insertAdjacentHTML('afterBegin', categoryOptions)
-}
+};
 
-export const categoryOptionTemplate = data => `<option value="${data.categoryId}">${data.name}</option>`
+export const categoryOptionTemplate = data => `<option value="${data.menuType}">${data.menuType}</option>`;

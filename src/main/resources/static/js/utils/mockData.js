@@ -74,7 +74,7 @@ export const mockMenuCategory = [
         'categoryId': 2,
         'name': 'BEVERAGE'
     }
-]
+];
 
 export const mockTable = [
     {
@@ -85,7 +85,7 @@ export const mockTable = [
         'tableId': 2,
         'tableName': '2번 테이블'
     }
-]
+];
 
 export const mockSales = [
     {
@@ -106,4 +106,4 @@ export const mockSales = [
         'price': 140000,
         'date': '2020-06-14 11:32:34'
     },
-]
+];
