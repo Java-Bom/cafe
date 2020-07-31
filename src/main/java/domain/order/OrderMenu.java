@@ -48,8 +48,26 @@ public class OrderMenu {
         this.quantity = quantity;
     }
 
+    public void addQuantity(final Quantity quantity) {
+        Quantity afterAdd = quantity.add(quantity);
+        validateMaxQuantity(afterAdd);
+        this.quantity = afterAdd;
+    }
+
     public boolean isSameMenu(final Menu menu) {
         return this.menu.equals(menu);
+    }
+
+    public String getMenuName() {
+        return this.menu.getName();
+    }
+
+    public int calculatePrice() {
+        return getMenuPrice() * quantity.getValue();
+    }
+
+    public int getMenuPrice() {
+        return this.menu.getPrice();
     }
 
     public void pay() {

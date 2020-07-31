@@ -1,6 +1,7 @@
 package domain.menu;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -24,13 +25,16 @@ public class Menu {
     private int number;
 
     @Column(nullable = false)
+    @Getter
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Getter
     private Category category;
 
     @Column(nullable = false)
+    @Getter
     private int price;
 
     @Builder

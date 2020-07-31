@@ -1,9 +1,11 @@
 package domain.order;
 
 import domain.menu.Menu;
+import dto.order.OrdersDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OrderMenus {
     private static final int MAX_QUANTITY = 30;
@@ -14,16 +16,16 @@ public class OrderMenus {
         this.orderMenus = orderMenus;
     }
 
-    public void isPossibleAdd(Menu menu, int quantity) {
-        Optional<Quantity> quantitySum = orderMenus.stream()
+    public Optional<OrderMenu> findByMenu(final Menu menu) {
+        return orderMenus.stream()
                 .filter(orderMenu -> orderMenu.isSameMenu(menu))
-                .map(OrderMenu::getQuantity)
-                .reduce(Quantity::add);
+                .findFirst();
+    }
 
-        Quantity orderQuantity = quantitySum.isPresent() ? quantitySum.get().add(new Quantity(quantity))
-                : new Quantity(quantity);
-
-        validateMaxQuantity(orderQuantity);
+    public List<OrdersDto> getOrders() {
+        return orderMenus.stream()
+                .map(OrdersDto::new)
+                .collect(Collectors.toList());
     }
 
     private void validateMaxQuantity(final Quantity quantity) {
