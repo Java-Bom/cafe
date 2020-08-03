@@ -12,7 +12,7 @@ function TableApp() {
         const newTable = {
             'tableName': $tableNameInput.value.toString(),
         }
-        api.table.create(newTable).then()
+        api.table.create(newTable).then(r => console.log(r))
     }
 
     const onDeleteTableItemHandler = event => {
@@ -33,7 +33,7 @@ function TableApp() {
 
     const initTables = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        api.table.getAll().then((tables) => {
+        api.table.getAll().then(tables => {
             initTable(tables);
             initEventListeners();
         })

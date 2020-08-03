@@ -19,7 +19,7 @@ public class CafeController {
         this.cafeService = cafeService;
     }
 
-    @PostMapping("/table")
+    @PostMapping("/tables")
     public ResponseEntity createTable(@RequestBody CreateTableDto dto) {
         cafeService.createTable(dto);
         return ResponseEntity.ok(null);

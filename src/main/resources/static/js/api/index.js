@@ -34,28 +34,28 @@ const api = (() => {
 
     const table = {
         getAll() {
-            return request(`/tables`)
+            return request(`/cafe/tables`)
         },
         get(id) {
-            return request(`/tables/${id}`)
+            return request(`/cafe/tables/${id}`)
         },
         create(data) {
-            return requestWithJsonData(`/tables`, METHOD.POST(data))
+            return requestWithJsonData(`/cafe/tables`, METHOD.POST(data))
         },
         delete(id) {
-            return request(`/tables/${id}`, METHOD.DELETE())
+            return request(`/cafe/tables/${id}`, METHOD.DELETE())
         }
     }
 
     const menu = {
         get(id) {
-            return requestWithJsonData(`/menus/${id}`)
+            return requestWithJsonData(`/cafe/menus/${id}`)
         },
         create(data) {
-            return requestWithJsonData(`/menus`, METHOD.POST(data))
+            return requestWithJsonData(`/cafe/menus`, METHOD.POST(data))
         },
         delete(id) {
-            return request(`/menus/${id}`, METHOD.DELETE())
+            return request(`/cafe/menus/${id}`, METHOD.DELETE())
         }
     }
 
