@@ -34,6 +34,7 @@ function TableApp() {
     const initTables = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
         api.table.getAll().then(tables => {
+            //Uncaught TypeError: Cannot read property 'getAll' of undefined 이건 도대체 왜뜨는걸까
             initTable(tables);
             initEventListeners();
         })

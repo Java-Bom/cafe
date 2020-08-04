@@ -1,4 +1,12 @@
 const METHOD = {
+    GET() {
+        return {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    },
     PUT(data) {
         return {
             method: 'PUT',
@@ -30,11 +38,15 @@ const METHOD = {
 
 const api = (() => {
     const request = (uri, config) => fetch(uri, config)
-    const requestWithJsonData = (uri, config) => fetch(uri, config).then(data => data.json())
+    const requestWithJsonData = (uri, config) => fetch(uri, config).then(data => {
+        console.log(data)
+        return data.json()
+    })
 
     const table = {
         getAll() {
-            return request(`/cafe/tables`)
+            //Failed to load resource: the server responded with a status of 404 () 대체 원인이 무어실까 ㅅㅂ 족같누
+            return request(`cafe/tables`, METHOD.GET())
         },
         get(id) {
             return request(`/cafe/tables/${id}`)
@@ -63,6 +75,6 @@ const api = (() => {
         table,
         menu
     }
-})()
+})
 
 export default api

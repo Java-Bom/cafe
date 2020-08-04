@@ -2,7 +2,7 @@ import {convertOrderItemTemplate, initOrderMenuOption, initPosTables} from "./ut
 import {mockMenus, mockOrder, mockPosTable} from "./utils/mockData.js";
 import {EVENT_TYPE} from "./utils/constants.js";
 import Modal from './ui/Modal.js'
-import {api} from './api/index.js'
+import api from './api/index'
 
 function PosApp() {
     const $tableContainer = document.querySelector('.table-container')
