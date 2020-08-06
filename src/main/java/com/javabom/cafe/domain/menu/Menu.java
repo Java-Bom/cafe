@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
+@Getter
 @NoArgsConstructor
 @Entity
 public class Menu {
@@ -21,20 +22,17 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private int number;
 
     @Column(nullable = false)
-    @Getter
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Getter
     private Category category;
 
     @Column(nullable = false)
-    @Getter
     private int price;
 
     @Builder

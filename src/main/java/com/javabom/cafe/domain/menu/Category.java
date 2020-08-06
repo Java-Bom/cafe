@@ -10,6 +10,10 @@ public enum Category {
         this.name = name;
     }
 
+    public Long getCategoryId() {
+        return (long) this.ordinal();
+    }
+
     @Override
     public String toString() {
         return "[" + name + "]";

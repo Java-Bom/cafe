@@ -1,6 +1,6 @@
 import {initMenu, initMenuCategory} from "./utils/templates.js";
-import {mockMenuCategory, mockMenus} from "./utils/mockData.js";
 import {EVENT_TYPE} from './utils/constants.js'
+import api from "./api/index.js";
 
 
 function MenuApp() {
@@ -8,13 +8,18 @@ function MenuApp() {
     const $menuAddBtn = document.querySelector('#menu-add-btn')
     const $menuNameInput = document.querySelector('#menu-name')
     const $menuPriceInput = document.querySelector('#menu-price')
+    const $menuTypeSelect = document.querySelector('#menu-type-select')
 
     const onCreateMenuItemHandler = () => {
         const newMenuItem = {
             'menuName': $menuNameInput.value,
-            'menuPrice': $menuPriceInput.value
+            'menuPrice': $menuPriceInput.value,
+            'menuType': $menuTypeSelect.value
         }
         //TODO 생성 api 호출
+        console.log(newMenuItem.menuType);
+        api.menu.create(newMenuItem);
+        window.location.reload();
     }
 
     const onDeleteMenuItemHandler = event => {
@@ -26,6 +31,8 @@ function MenuApp() {
         }
         const menuId = $menuItem.dataset.id
         //TODO 삭제 api 호출
+        api.menu.delete(menuId);
+        window.location.reload();
 
     }
 
@@ -36,8 +43,14 @@ function MenuApp() {
 
     const initTables = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        initMenu(mockMenus);
-        initMenuCategory(mockMenuCategory);
+        api.menu.getAll()
+            .then(response => response.json())
+            .then(data => initMenu(data));
+
+        api.menu.getCategoryAll()
+            .then(response => response.json())
+            .then(data => initMenuCategory(data));
+
         initEventListeners();
     }
 

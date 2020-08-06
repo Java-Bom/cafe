@@ -48,6 +48,9 @@ const api = (() => {
   }
 
   const menu = {
+    getAll() {
+      return request(`/menus`)
+    },
     get(id) {
       return requestWithJsonData(`/menus/${id}`)
     },
@@ -56,6 +59,9 @@ const api = (() => {
     },
     delete(id) {
       return request(`/menus/${id}`, METHOD.DELETE())
+    },
+    getCategoryAll() {
+      return request(`/menus/categories`)
     }
   }
 
