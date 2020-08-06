@@ -12,7 +12,8 @@ public class TableInfoDto {
     private boolean orderStatus;
 
     @Builder
-    public TableInfoDto(final String tableName, final boolean orderStatus) {
+    public TableInfoDto(final Long tableId, final String tableName, final boolean orderStatus) {
+        this.tableId = tableId;
         this.tableName = tableName;
         this.orderStatus = orderStatus;
     }

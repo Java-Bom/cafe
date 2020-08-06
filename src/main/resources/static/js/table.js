@@ -26,6 +26,8 @@ function TableApp() {
         }
         const tableId = $tableItem.dataset.id
         //TODO 삭제 api 호출
+        api.table.delete(tableId);
+        window.location.reload();
     }
 
     const initEventListeners = () => {

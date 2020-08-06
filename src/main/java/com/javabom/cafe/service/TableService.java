@@ -21,11 +21,15 @@ public class TableService {
         List<Table> tables = tableRepository.findAll();
 
         return tables.stream()
-                .map(table -> new TableInfoDto(table.getTableName(), orderMenuRepository.existsByTable(table)))
+                .map(table -> new TableInfoDto(table.getId(), table.getTableName(), orderMenuRepository.existsByTable(table)))
                 .collect(Collectors.toList());
     }
 
     public Table addTable(final TableAddDto tableAddDto) {
         return tableRepository.save(tableAddDto.toEntity());
+    }
+
+    public void deleteTable(final Long id) {
+        tableRepository.deleteById(id);
     }
 }
