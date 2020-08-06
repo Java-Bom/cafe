@@ -33,6 +33,9 @@ const api = (() => {
   const requestWithJsonData = (uri, config) => fetch(uri, config).then(data => data.json())
 
   const table = {
+    getList() {
+      return request(`/tables`)
+    },
     get(id) {
       return request(`/tables/${id}`)
     },

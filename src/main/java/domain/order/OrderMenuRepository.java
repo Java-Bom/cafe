@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderMenuRepository extends JpaRepository<OrderMenu, Long> {
     List<OrderMenu> findByTable(final Table table);
+
+    boolean existsByTable(final Table table);
 }

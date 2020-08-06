@@ -1,6 +1,7 @@
 package domain.table;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -10,23 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @NoArgsConstructor
-@Entity
+@Entity(name = "account")
 public class Table {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     @Column(nullable = false)
-    private int number;
+    private String tableName;
 
     @Builder
-    public Table(final int number) {
-        this.number = number;
+    public Table(final String tableName) {
+        this.tableName = tableName;
     }
 
     @Override
     public String toString() {
-        return Integer.toString(number);
+        return tableName;
     }
 }
