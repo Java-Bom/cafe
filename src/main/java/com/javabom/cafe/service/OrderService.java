@@ -53,7 +53,8 @@ public class OrderService {
         return TableOrderDto.builder()
                 .tableId(table.getId())
                 .tableName(table.getTableName())
-                .ordersDtos(orderMenus.getOrders())
+                .orders(orderMenus.getOrders())
+                .payment(orderMenus.calculatePayment())
                 .build();
     }
 

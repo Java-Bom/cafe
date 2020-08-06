@@ -12,19 +12,13 @@ public class TableOrderDto {
     private Long tableId;
     private String tableName;
     private List<OrdersDto> orders;
-    private OrderPayDto pay;
+    private OrderPayDto payment;
 
     @Builder
-    public TableOrderDto(final Long tableId, final String tableName, final List<OrdersDto> ordersDtos) {
-        this.tableId = tableId;
-        this.tableName = tableName;
-        this.orders = ordersDtos;
-    }
-
-    public TableOrderDto(final Long tableId, final String tableName, final List<OrdersDto> orders, final OrderPayDto pay) {
+    public TableOrderDto(final Long tableId, final String tableName, final List<OrdersDto> orders, final OrderPayDto payment) {
         this.tableId = tableId;
         this.tableName = tableName;
         this.orders = orders;
-        this.pay = pay;
+        this.payment = payment;
     }
 }

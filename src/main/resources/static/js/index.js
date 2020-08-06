@@ -29,7 +29,7 @@ function PosApp() {
 
                 $orderTableName.innerHTML = orderResponse.tableName;
                 convertOrderItemTemplate(orderResponse.orders);
-                setOrderPrice(0, 0);
+                setOrderPrice(orderResponse.payment.cash, orderResponse.payment.card);
             });
     }
 

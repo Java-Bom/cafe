@@ -74,6 +74,14 @@ public class OrderMenu {
         paymentStatus = true;
     }
 
+    public boolean isCake() {
+        return menu.isCake();
+    }
+
+    public boolean isBeverage() {
+        return !menu.isCake();
+    }
+
     private void validateMaxQuantity(final Quantity quantity) {
         if (quantity.getValue() > MAX_QUANTITY) {
             throw new IllegalArgumentException("주문 가능 수량을 초과 하였습니다. - " + quantity);

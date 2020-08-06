@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPayDto {
-    private int cash;
-    private int card;
+    private double cash;
+    private double card;
 }
