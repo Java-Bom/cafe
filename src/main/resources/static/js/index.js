@@ -2,7 +2,7 @@ import {convertOrderItemTemplate, initOrderMenuOption, initPosTables} from "./ut
 import {mockMenus, mockOrder} from "./utils/mockData.js";
 import {EVENT_TYPE} from "./utils/constants.js";
 import Modal from './ui/Modal.js'
-import api from './api/index'
+import api from './api/index.js'
 
 function PosApp() {
     const $tableContainer = document.querySelector('.table-container')
@@ -49,8 +49,9 @@ function PosApp() {
 
     const initTables = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        const posTables = api.table.getList();
-        initPosTables(posTables);
+        const tableResponse = api.table.getAll()
+            .then(response => response.json())
+            .then(data => initPosTables(data))
     }
 
     const init = () => {
