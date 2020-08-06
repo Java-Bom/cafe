@@ -29,12 +29,6 @@ public class OrderMenus {
                 .collect(Collectors.toList());
     }
 
-    private void validateMaxQuantity(final Quantity quantity) {
-        if (quantity.getValue() > MAX_QUANTITY) {
-            throw new IllegalArgumentException("주문 가능 수량을 초과 하였습니다. - " + quantity);
-        }
-    }
-
     public OrderPayDto calculatePayment() {
         List<OrderMenu> cakeOrders = orderMenus.stream()
                 .filter(OrderMenu::isCake)
@@ -47,7 +41,10 @@ public class OrderMenus {
         double cashPrice = Payment.calculateCash(cakeOrders, beverageOrders);
         double cardPrice = Payment.calculateCard(cakeOrders, beverageOrders);
 
-        return new OrderPayDto(cashPrice, cardPrice);
+        return OrderPayDto.builder()
+                .cash(cashPrice)
+                .card(cardPrice)
+                .build();
     }
 
 }

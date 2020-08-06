@@ -39,8 +39,8 @@ function PosApp() {
     const setOrderPrice = (cash, card) => {
         const $cashPrice = document.querySelector('#cash-price')
         const $cardPrice = document.querySelector('#card-price')
-        $cardPrice.innerHTML = cash + ' 원'
-        $cashPrice.innerHTML = card + ' 원'
+        $cardPrice.innerHTML = card + ' 원'
+        $cashPrice.innerHTML = cash + ' 원'
     }
 
     const initMenuSelectOptions = () => {
@@ -64,10 +64,6 @@ function PosApp() {
 
         api.order.create(order);
     }
-
-    // const initOrderEventListeners = tableId => {
-    //     $orderAddBtn.addEventListener(EVENT_TYPE.CLICK, onCreateOrderHandler(tableId))
-    // }
 
     const initEventListeners = () => {
         $tableContainer.addEventListener(EVENT_TYPE.CLICK, onShowOrderHandler)

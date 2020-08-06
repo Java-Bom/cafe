@@ -25,9 +25,6 @@ public class TableController {
     @GetMapping("")
     public List<TableInfoDto> showTableList() {
         List<TableInfoDto> tableInfos = tableService.getTableInfos();
-
-        System.out.println(tableInfos);
-
         return tableInfos;
     }
 

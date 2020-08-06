@@ -27,7 +27,6 @@ public class OrderController {
 
     @PostMapping("")
     public ResponseEntity<Void> addOrder(@RequestBody OrderAddDto orderAddDto) {
-        System.out.println(orderAddDto);
         orderService.addOrder(orderAddDto);
 
         return ResponseEntity.ok().build();

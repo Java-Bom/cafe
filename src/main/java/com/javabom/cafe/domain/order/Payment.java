@@ -30,7 +30,12 @@ public class Payment {
     }
 
     private static int getCakeDiscount(List<OrderMenu> cakeOrders) {
-        return (cakeOrders.size() / CAKE_ORDER_COUNT) * CAKE_DISCOUNT;
+        int cakeQuantity = cakeOrders.stream()
+                .map(OrderMenu::getQuantity)
+                .mapToInt(Quantity::getValue)
+                .sum();
+
+        return (cakeQuantity / CAKE_ORDER_COUNT) * CAKE_DISCOUNT;
     }
 
     private static double getCashDiscount(int cashAmount) {
