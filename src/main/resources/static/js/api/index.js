@@ -68,6 +68,10 @@ const api = (() => {
   const order = {
     get(id) {
       return request(`/orders/${id}`)
+    },
+
+    create(data) {
+      return request(`/orders`, METHOD.POST(data))
     }
   }
 

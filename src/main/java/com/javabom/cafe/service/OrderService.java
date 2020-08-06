@@ -29,11 +29,12 @@ public class OrderService {
         Menu menu = findMenuById(orderAddDto.getMenuId());
         Quantity menuQuantity = new Quantity(orderAddDto.getQuantity());
 
-        OrderMenus orderMenus = new OrderMenus(orderMenuRepository.findByTable(table));
+        OrderMenus orderMenus = new OrderMenus(orderMenuRepository.findAllByTable(table));
         Optional<OrderMenu> findOrderMenu = orderMenus.findByMenu(menu);
 
         if (findOrderMenu.isPresent()) {
-            findOrderMenu.get().addQuantity(menuQuantity);
+            OrderMenu findOrder = findOrderMenu.get();
+            findOrder.addQuantity(menuQuantity);
             return;
         }
 
@@ -46,9 +47,10 @@ public class OrderService {
         orderMenuRepository.save(orderMenu);
     }
 
+    @Transactional
     public TableOrderDto showOrders(final Long tableId) {
         Table table = findTableById(tableId);
-        OrderMenus orderMenus = new OrderMenus(orderMenuRepository.findByTable(table));
+        OrderMenus orderMenus = new OrderMenus(orderMenuRepository.findAllByTable(table));
 
         return TableOrderDto.builder()
                 .tableId(table.getId())

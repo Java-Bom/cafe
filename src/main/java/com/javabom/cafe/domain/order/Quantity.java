@@ -3,6 +3,7 @@ package com.javabom.cafe.domain.order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -11,6 +12,7 @@ import javax.persistence.Embeddable;
 public class Quantity {
     private static final int MIN_QUANTITY = 1;
 
+    @Column(name = "quantity")
     private int value;
 
     public Quantity(final int value) {

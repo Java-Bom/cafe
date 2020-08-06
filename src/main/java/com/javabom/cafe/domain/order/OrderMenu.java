@@ -49,7 +49,7 @@ public class OrderMenu {
     }
 
     public void addQuantity(final Quantity quantity) {
-        Quantity afterAdd = quantity.add(quantity);
+        Quantity afterAdd = this.quantity.add(quantity);
         validateMaxQuantity(afterAdd);
         this.quantity = afterAdd;
     }

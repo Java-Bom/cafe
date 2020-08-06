@@ -1,13 +1,14 @@
 import {convertOrderItemTemplate, initOrderMenuOption, initPosTables} from "./utils/templates.js";
-import {mockMenus} from "./utils/mockData.js";
 import {EVENT_TYPE} from "./utils/constants.js";
 import Modal from './ui/Modal.js'
 import api from './api/index.js'
 
 function PosApp() {
     const $tableContainer = document.querySelector('.table-container')
+    const $orderAddBtn = document.querySelector('#order-submit-button')
 
     let menuModal;
+    let currentTableId;
 
     const onShowOrderHandler = event => {
         convertOrderItemTemplate()
@@ -19,7 +20,9 @@ function PosApp() {
             return
         }
 
-        const tableId = $table.dataset.id
+        const tableId = $table.dataset.id;
+        currentTableId = tableId;
+
         //TODO tableId 로 해당 테이블 주문 정보 api call
         api.order.get(tableId)
             .then(response => response.json())
@@ -42,12 +45,33 @@ function PosApp() {
 
     const initMenuSelectOptions = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        const menuResponse = mockMenus;
-        initOrderMenuOption(menuResponse)
+        api.menu.getAll()
+            .then(response => response.json())
+            .then(data => initOrderMenuOption(data));
     }
+
+    const onCreateOrderHandler = () => {
+        const $menuSelect = document.querySelector('#menu-select-options');
+        const $menuQuantitySelect = document.querySelector('#menu-amount-select')
+
+        const order = {
+            'tableId': currentTableId,
+            'menuId': $menuSelect.value,
+            'quantity': $menuQuantitySelect.value
+        };
+
+        console.log(order);
+
+        api.order.create(order);
+    }
+
+    // const initOrderEventListeners = tableId => {
+    //     $orderAddBtn.addEventListener(EVENT_TYPE.CLICK, onCreateOrderHandler(tableId))
+    // }
 
     const initEventListeners = () => {
         $tableContainer.addEventListener(EVENT_TYPE.CLICK, onShowOrderHandler)
+        $orderAddBtn.addEventListener(EVENT_TYPE.CLICK, onCreateOrderHandler);
     }
 
     const initTables = () => {
