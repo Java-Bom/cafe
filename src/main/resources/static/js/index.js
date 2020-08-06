@@ -1,5 +1,5 @@
 import {convertOrderItemTemplate, initOrderMenuOption, initPosTables} from "./utils/templates.js";
-import {mockMenus, mockOrder} from "./utils/mockData.js";
+import {mockMenus} from "./utils/mockData.js";
 import {EVENT_TYPE} from "./utils/constants.js";
 import Modal from './ui/Modal.js'
 import api from './api/index.js'
@@ -21,13 +21,16 @@ function PosApp() {
 
         const tableId = $table.dataset.id
         //TODO tableId 로 해당 테이블 주문 정보 api call
-        const orderResponse = mockOrder;
-        const $orderTableName = document.querySelector('#order-table-name')
+        api.order.get(tableId)
+            .then(response => response.json())
+            .then(function (data) {
+                const orderResponse = data;
+                const $orderTableName = document.querySelector('#order-table-name')
 
-        $orderTableName.innerHTML = orderResponse.tableName;
-        convertOrderItemTemplate(orderResponse.orders)
-        setOrderPrice(23500, 23500)
-
+                $orderTableName.innerHTML = orderResponse.tableName;
+                convertOrderItemTemplate(orderResponse.orders);
+                setOrderPrice(0, 0);
+            });
     }
 
     const setOrderPrice = (cash, card) => {

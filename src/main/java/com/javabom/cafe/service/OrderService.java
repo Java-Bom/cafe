@@ -9,12 +9,11 @@ import com.javabom.cafe.domain.order.Quantity;
 import com.javabom.cafe.domain.table.Table;
 import com.javabom.cafe.domain.table.TableRepository;
 import com.javabom.cafe.dto.order.OrderAddDto;
-import com.javabom.cafe.dto.order.OrdersDto;
+import com.javabom.cafe.dto.order.TableOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,11 +46,15 @@ public class OrderService {
         orderMenuRepository.save(orderMenu);
     }
 
-    public List<OrdersDto> showOrders(final Long tableId) {
+    public TableOrderDto showOrders(final Long tableId) {
         Table table = findTableById(tableId);
         OrderMenus orderMenus = new OrderMenus(orderMenuRepository.findByTable(table));
 
-        return orderMenus.getOrders();
+        return TableOrderDto.builder()
+                .tableId(table.getId())
+                .tableName(table.getTableName())
+                .ordersDtos(orderMenus.getOrders())
+                .build();
     }
 
     private Table findTableById(final Long id) {

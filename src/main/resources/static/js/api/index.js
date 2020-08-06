@@ -65,9 +65,16 @@ const api = (() => {
     }
   }
 
+  const order = {
+    get(id) {
+      return request(`/orders/${id}`)
+    }
+  }
+
   return {
     table,
-    menu
+    menu,
+    order
   }
 })()
 
