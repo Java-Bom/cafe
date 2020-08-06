@@ -1,9 +1,13 @@
 package com.javabom.cafe.controller;
 
+import com.javabom.cafe.dto.table.TableAddDto;
 import com.javabom.cafe.dto.table.TableInfoDto;
 import com.javabom.cafe.service.TableService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +27,12 @@ public class TableController {
         System.out.println(tableInfos);
 
         return tableInfos;
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Void> addTable(@RequestBody final TableAddDto tableAddDto) {
+        tableService.addTable(tableAddDto);
+
+        return ResponseEntity.ok().build();
     }
 }
