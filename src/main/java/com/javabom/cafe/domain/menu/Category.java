@@ -1,4 +1,4 @@
-package domain;
+package com.javabom.cafe.domain.menu;
 
 public enum Category {
     CAKE("케이크"),
@@ -8,6 +8,10 @@ public enum Category {
 
     Category(final String name) {
         this.name = name;
+    }
+
+    public Long getCategoryId() {
+        return (long) this.ordinal();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package view;
+package com.javabom.cafe.view;
 
 import java.util.Scanner;
 

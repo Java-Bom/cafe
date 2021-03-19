@@ -1,7 +1,7 @@
-package view;
+package com.javabom.cafe.view;
 
-import domain.Menu;
-import domain.Table;
+import com.javabom.cafe.domain.menu.Menu;
+import com.javabom.cafe.domain.table.Table;
 
 import java.util.List;
 
