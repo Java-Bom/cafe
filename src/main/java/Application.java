@@ -2,8 +2,6 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 import static domain.MenuRepository.findMenuByNumber;
 import static domain.TableRepository.findTableByNumber;
 
@@ -14,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        final Cafe cafe = new Cafe();
+        final Cafe cafe = new Cafe(TableRepository.tables(), MenuRepository.menus());
         int tableNumber;
         int menuNumber;
         int selectedFunction;

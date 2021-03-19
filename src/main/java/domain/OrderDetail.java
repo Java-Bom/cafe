@@ -1,8 +1,8 @@
 package domain;
 
 public class OrderDetail {
-    private Menu menu;
-    private int quantity;
+    private final Menu menu;
+    private final int quantity;
 
     public OrderDetail(final Menu menu, final int quantity) {
         this.menu = menu;

@@ -8,11 +8,16 @@ function MenuApp() {
     const $menuAddBtn = document.querySelector('#menu-add-btn')
     const $menuNameInput = document.querySelector('#menu-name')
     const $menuPriceInput = document.querySelector('#menu-price')
+    const type = document.getElementById("menu-type-select")
+    const selectedIndex = type.selectedIndex
+    const typeText = type.options[selectedIndex].text
+    const typeValue = type.options[selectedIndex].value
 
     const onCreateMenuItemHandler = () => {
         const newMenuItem = {
             'menuName': $menuNameInput.value,
-            'menuPrice': $menuPriceInput.value
+            'menuPrice': $menuPriceInput.value,
+            'menuType': typeValue,
         }
         //TODO 생성 api 호출
     }

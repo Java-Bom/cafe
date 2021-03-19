@@ -1,12 +1,12 @@
-package domain;
+package com.javabom.cafe;
 
+import domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
 
@@ -14,7 +14,7 @@ class TableTest {
     @Test
     void hasMenu() {
         // given
-        Table table = new Table(0);
+        Table table = new Table(0, "1번");
         Menu menu = new Menu(0, "name", Category.CAKE, 1000);
 
         // when
@@ -28,7 +28,7 @@ class TableTest {
     @Test
     void getOrderDetails() {
         // given
-        Table table = new Table(0);
+        Table table = new Table(0, "1번");
         Menu menu = new Menu(0, "name", Category.CAKE, 1000);
         OrderDetail expectedOrderDetail = new OrderDetail(menu, 5);
 
@@ -46,7 +46,7 @@ class TableTest {
     @ParameterizedTest
     void getTotalPrice(Payment payment, int finalPrice) {
         // given
-        Table table = new Table(0);
+        Table table = new Table(0, "1번");
         Menu menu = new Menu(0, "name", Category.CAKE, 1000);
 
         // when

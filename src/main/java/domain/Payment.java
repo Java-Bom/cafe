@@ -7,11 +7,11 @@ public enum Payment {
     CASH(2, i -> (int) ((double) i * 0.9));
 
     private final int index;
-    private final FinalPayStrategy finalPayStrategy;
+    private final PayStrategy payStrategy;
 
-    Payment(final int index, final FinalPayStrategy finalPayStrategy) {
+    Payment(final int index, final PayStrategy payStrategy) {
         this.index = index;
-        this.finalPayStrategy = finalPayStrategy;
+        this.payStrategy = payStrategy;
     }
 
     public static Payment findByIndex(int index) {
@@ -22,10 +22,10 @@ public enum Payment {
     }
 
     public int calculateFinalPrice(int price) {
-        return this.finalPayStrategy.disCountPrice(price);
+        return this.payStrategy.disCountPrice(price);
     }
 
-    interface FinalPayStrategy {
+    interface PayStrategy {
         int disCountPrice(final int originalPrice);
     }
 }

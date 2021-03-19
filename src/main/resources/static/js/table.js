@@ -1,7 +1,7 @@
 import {initTable} from "./utils/templates.js";
 import {EVENT_TYPE} from './utils/constants.js'
 import {mockTable} from "./utils/mockData.js";
-
+import api from "./api/index.js";
 
 function TableApp() {
     const $tableList = document.querySelector('#table-list')
@@ -10,9 +10,9 @@ function TableApp() {
 
     const onCreateTableItemHandler = () => {
         const newTable = {
-            'tableName': $tableNameInput.value,
+            'tableName': $tableNameInput.value.toString(),
         }
-        //TODO 생성 api 호출
+        api.table.create(newTable).then(r => console.log(r))
     }
 
     const onDeleteTableItemHandler = event => {
@@ -33,8 +33,11 @@ function TableApp() {
 
     const initTables = () => {
         //TODO api call 로 mock 데이터를 실제 데이터로 바꾸기
-        initTable(mockTable);
-        initEventListeners();
+        api.table.getAll().then(tables => {
+            //Uncaught TypeError: Cannot read property 'getAll' of undefined 이건 도대체 왜뜨는걸까
+            initTable(tables);
+            initEventListeners();
+        })
     }
 
     const init = () => {
