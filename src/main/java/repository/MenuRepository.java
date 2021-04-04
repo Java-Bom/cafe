@@ -1,8 +1,12 @@
-package domain;
+package repository;
+
+import domain.Category;
+import domain.Menu;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class MenuRepository {
     private static final List<Menu> menus = new ArrayList<>();
@@ -18,6 +22,16 @@ public class MenuRepository {
         menus.add(new Menu(22, "에스프레소", Category.BEVERAGE, 4000));
         menus.add(new Menu(23, "카푸치노", Category.BEVERAGE, 5000));
         menus.add(new Menu(24, "그린티 라떼", Category.BEVERAGE, 6000));
+    }
+
+    public Optional<Menu> findByNumber(int number){
+        return Optional.ofNullable(menus.get(number));
+    }
+
+    public Optional<Menu> findByName(String name){
+        return menus.stream()
+                .filter(menu -> menu.getName().equals(name))
+                .findAny();
     }
 
     public static List<Menu> menus() {
