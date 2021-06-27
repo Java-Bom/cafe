@@ -33,7 +33,6 @@ public class MenuRepository {
                 .filter(menu -> menu.getName().equals(name))
                 .findAny();
     }
-
     public static List<Menu> menus() {
         return Collections.unmodifiableList(menus);
     }
