@@ -14,4 +14,14 @@ public class InputView {
         System.out.println("## 주문할 테이블을 선택하세요.");
         return scanner.nextInt();
     }
+
+    public static int inputMenu(){
+        System.out.println("## 메뉴 선택");
+        return scanner.nextInt();
+    }
+
+    public static int inputCount(){
+        System.out.println("## 수량 선택");
+        return scanner.nextInt();
+    }
 }

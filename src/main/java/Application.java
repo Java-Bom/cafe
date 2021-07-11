@@ -1,5 +1,5 @@
 import domain.Menu;
-import jdk.internal.util.xml.impl.Input;
+//import jdk.internal.util.xml.impl.Input;
 import repository.MenuRepository;
 import domain.Table;
 import repository.OrderRepository;
@@ -16,19 +16,37 @@ public class Application {
         OutputView.printMain();
         final CafeOrderService cafeOrderService = new CafeOrderService(new OrderRepository());
         final List<Table> tables = TableRepository.tables();
-        final int func = InputView.inputFunction();
+        int func = InputView.inputFunction();
 
-        if(func == 1)
+        while(func!=3)
         {
-            orderMenu(tables, cafeOrderService);
+            if(func == 1)
+            {
+                orderMenu(tables, cafeOrderService);
+            }
+            if(func == 2)
+            {
+                payOrders(tables, cafeOrderService);
+            }
+            OutputView.printMain();
+            func = InputView.inputFunction();
         }
-        final List<Menu> menus = MenuRepository.menus();
-        OutputView.printMenus(menus);
+    }
+
+    private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
+        OutputView.printTables(tables);
+        int tableNum = InputView.inputTableNumber();
+        OutputView.printOrders(cafeOrderService, tableNum);
     }
 
     private static void orderMenu(List<Table> tables, CafeOrderService cafeOrderService)
     {
         OutputView.printTables(tables);
         int tableNum = InputView.inputTableNumber();
+        final List<Menu> menus = MenuRepository.menus();
+        OutputView.printMenus(menus);
+        int menuNum = InputView.inputMenu();
+        int menuCount = InputView.inputCount();
+        cafeOrderService.orderMenu(menuNum,menuCount,tableNum);
     }
 }
