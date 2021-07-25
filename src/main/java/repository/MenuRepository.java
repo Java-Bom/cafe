@@ -24,8 +24,11 @@ public class MenuRepository {
         menus.add(new Menu(24, "그린티 라떼", Category.BEVERAGE, 6000));
     }
 
-    public static Optional<Menu> findByNumber(int number){
-        return Optional.ofNullable(menus.get(number));
+    public static Menu findByNumber(int number){
+        return menus.stream()
+                .filter(menu -> menu.getNumber()==number)
+                .findFirst()
+                .orElseThrow(IllegalAccessError::new);
     }
 
     public Optional<Menu> findByName(String name){

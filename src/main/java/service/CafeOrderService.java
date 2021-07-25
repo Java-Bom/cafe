@@ -5,11 +5,11 @@ import domain.Order;
 import repository.MenuRepository;
 import repository.OrderRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class CafeOrderService {
     private static final int DISCOUNT_FOR_CAKES = 3;
@@ -21,6 +21,22 @@ public class CafeOrderService {
         this.orderRepository = orderRepository;
     }
 
+    public boolean isValidTableNum(int tableNum)
+    {
+        if(tableNum<0||tableNum==7||tableNum>9){
+            System.out.println("## 존재하지 않는 테이블입니다. \n테이블을 다시 선택하세요\n");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public boolean canOrderMenu(int tableNum, int menuNum, int menuCount)
+    {
+        return orderRepository.canOrder(tableNum, menuNum, menuCount);
+    }
+
     public void orderMenu(int menuNum, int count, int tableNum)
     {
         for(int i=0;i<count;i++){
@@ -28,27 +44,24 @@ public class CafeOrderService {
         }
     }
 
-    public void getOrdersByTable(int tableNum) {
-        List<Integer> orderedMenusNum = orderRepository
-                .findByTableNumber(tableNum)
-                .map(Order::getMenuNum)
-                .collect(Collectors.toList());
+    public Map<Menu,Long> getOrdersByTable(int tableNum) {
+        return orderRepository.getBill(tableNum);
+    }
 
-        List<Optional<Menu>> menus = new ArrayList<>();
-
-        for (int i = 0; i < orderRepository.countOrders(); i++) {
-            menus.add(MenuRepository.findByNumber(orderedMenusNum.get(i).intValue()-1));
+    public boolean isOrderedTable(int tableNum){
+        if(orderRepository.getBill(tableNum).isEmpty()){
+            return false;
+        }else{
+            return true;
         }
+    }
 
-        for (int i = 0; i < menus.size(); i++){
-            menus.get(i).ifPresent(menu ->
-                    System.out.println(menu.getName()+" "+menu.getNumber()+" "+menu.getPrice()));
+    public boolean checkMenuNum(int menuNum) {
+        try{
+            return MenuRepository.findByNumber(menuNum) instanceof Menu;
+        }catch (Exception e){
+            return false;
         }
-
-        Optional.ofNullable(menus).orElseGet(() -> {
-            System.out.println(menus.iterator().next().get().getName());
-            return null;
-        });
     }
 
 }
