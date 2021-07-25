@@ -34,19 +34,33 @@ public class Application {
     }
 
     private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
-        OutputView.printTables(tables);
-        int tableNum = InputView.inputTableNumber();
+        OutputView.printTables(tables, cafeOrderService);
+        int tableNum = InputView.inputPayTableNumber();
         OutputView.printOrders(cafeOrderService, tableNum);
     }
 
     private static void orderMenu(List<Table> tables, CafeOrderService cafeOrderService)
     {
-        OutputView.printTables(tables);
+        OutputView.printTables(tables, cafeOrderService);
         int tableNum = InputView.inputTableNumber();
+        boolean isValidTblNum = cafeOrderService.isValidTableNum(tableNum);
+        if(isValidTblNum==false){
+            orderMenu(tables, cafeOrderService);
+        }
         final List<Menu> menus = MenuRepository.menus();
         OutputView.printMenus(menus);
         int menuNum = InputView.inputMenu();
+        boolean isValidMenuNum = cafeOrderService.checkMenuNum(menuNum);
+        if(isValidMenuNum==false){
+            OutputView.printMenuAlert();
+            orderMenu(tables, cafeOrderService);
+        }
         int menuCount = InputView.inputCount();
-        cafeOrderService.orderMenu(menuNum,menuCount,tableNum);
+        boolean isValidMenuCount = cafeOrderService.canOrderMenu(tableNum, menuNum, menuCount);
+        if(isValidMenuCount==false){
+            OutputView.printMaxAlert();
+            return;
+        }
+        cafeOrderService.orderMenu(menuNum, menuCount, tableNum);
     }
 }

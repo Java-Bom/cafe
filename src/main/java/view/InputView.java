@@ -15,6 +15,11 @@ public class InputView {
         return scanner.nextInt();
     }
 
+    public static int inputPayTableNumber(){
+        System.out.println("## 테이블 선택");
+        return scanner.nextInt();
+    }
+
     public static int inputMenu(){
         System.out.println("## 메뉴 선택");
         return scanner.nextInt();

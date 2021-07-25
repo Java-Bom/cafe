@@ -17,5 +17,7 @@ public class Order {
         return tableNum;
     }
 
-
+    public boolean isEqualTable(int tableNum){
+        return this.tableNum == tableNum;
+    }
 }
