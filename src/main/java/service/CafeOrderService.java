@@ -1,15 +1,10 @@
 package service;
 
-import domain.Menu;
-import domain.Order;
+import domain.*;
 import repository.MenuRepository;
 import repository.OrderRepository;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 public class CafeOrderService {
     private static final int DISCOUNT_FOR_CAKES = 3;
@@ -44,7 +39,7 @@ public class CafeOrderService {
         }
     }
 
-    public Map<Menu,Long> getOrdersByTable(int tableNum) {
+    public Map<Menu,Long> getBillByTable(int tableNum) {
         return orderRepository.getBill(tableNum);
     }
 
@@ -64,4 +59,38 @@ public class CafeOrderService {
         }
     }
 
+    public long getAmountOfPayment(int tableNum, PayType payType, Map<Menu, Long> bill) {
+        int numberOfCakes = getNumOfCakes(bill);
+        long amountOfPayment = getFinalPayment(bill, numberOfCakes, payType.getDiscountRate());
+        orderRepository.finishedPayment(tableNum);
+
+        return amountOfPayment;
+    }
+
+    private int getNumOfCakes(Map<Menu, Long> bill) {
+        int numOfCakes = 0;
+        for (Map.Entry<Menu, Long> entry : bill.entrySet()){
+            if(entry.getKey().getCategory()==Category.CAKE){
+                numOfCakes += entry.getValue();
+            }
+        }
+        return numOfCakes;
+    }
+
+    public long getSumOfPayment(Map<Menu, Long> bill){
+        long totalSumOfPayment = 0;
+        for (Map.Entry<Menu, Long> entry : bill.entrySet()){
+            totalSumOfPayment += entry.getKey().getPrice()*entry.getValue();
+        }
+        return totalSumOfPayment;
+    }
+
+    private long getFinalPayment(Map<Menu,Long> bill, int numberOfCakes, int discountRate){
+        long totalSumOfPayment = getSumOfPayment(bill);
+        if(numberOfCakes>=DISCOUNT_FOR_CAKES){
+            totalSumOfPayment -= DISCOUNT_MONEY_PER_NUM_OF_CAKES*(numberOfCakes/3);
+        }
+        totalSumOfPayment = (long)(totalSumOfPayment - totalSumOfPayment*((float)discountRate/100));
+        return totalSumOfPayment;
+    }
 }

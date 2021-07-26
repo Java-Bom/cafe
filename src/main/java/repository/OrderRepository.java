@@ -18,50 +18,12 @@ public class OrderRepository {
         orders.add(order);
     }
 
-    public int countOrders(){
-        return orders.size();
-    }
-
-    public int countMenusPerTable(int tableNum)
-    {
-        return (int)orders.stream()
-                .filter(order-> order.isEqualTable(tableNum))
-                .count();
-    }
-
     public int countMenusNumber(int tableNum, int menuNum){
         int count= (int)orders.stream()
                 .filter(order->order.isEqualTable(tableNum))
                 .filter(order->menuNum==order.getMenuNum())
                 .count();
         return count;
-    }
-
-    //가장 수량이 많은 메뉴의 수량을 체크하는 메서드
-    //need to edit
-    public int countNumberPerMenu(int tableNum)
-    {
-        List<Order> orders = findByTableNumber(tableNum);
-        if(orders.isEmpty()){
-            return 0;
-        }
-        Map<Menu, Long> bill = orders.stream()
-                .map(order -> MenuRepository.findByNumber(order.getMenuNum()))
-                .collect(Collectors.groupingBy(order->order,HashMap::new, counting()));
-        List<Map.Entry<Menu, Long>> entryList = new LinkedList(bill.entrySet());
-        entryList.sort(Map.Entry.comparingByValue());
-
-        System.out.println(entryList.get(0).getValue().intValue());
-        return entryList.get(0).getValue().intValue();
-    }
-
-    public boolean canOrder(int tableNum)
-    {
-        if(countNumberPerMenu(tableNum)<=MAX_NUMBER_PER_MENU){
-            return true;
-        }else{
-            return false;
-        }
     }
 
     public boolean canOrder(int tableNum, int menuNum, int menuCount){
@@ -78,7 +40,7 @@ public class OrderRepository {
         return 
                 orders.stream()
                         .filter(order-> order.isEqualTable(tableNum))
-                .collect(toList());
+                        .collect(toList());
     }
 
     //해당 테이블에서 해당 메뉴의 수량을 출력하는 메소드
@@ -91,6 +53,8 @@ public class OrderRepository {
         return bill;
     }
 
-
+    public void finishedPayment(int tableNum){
+        orders.removeIf(order->order.isEqualTable(tableNum));
+    }
 
 }

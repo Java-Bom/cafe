@@ -1,5 +1,6 @@
 import domain.Menu;
 //import jdk.internal.util.xml.impl.Input;
+import domain.PayType;
 import repository.MenuRepository;
 import domain.Table;
 import repository.OrderRepository;
@@ -9,6 +10,8 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Application {
     // TODO 구현 진행
@@ -28,6 +31,9 @@ public class Application {
             {
                 payOrders(tables, cafeOrderService);
             }
+            else if(func>3 || func<0){
+                throw new NoSuchElementException("해당 기능은 존재하지 않습니다.");
+            }
             OutputView.printMain();
             func = InputView.inputFunction();
         }
@@ -36,7 +42,17 @@ public class Application {
     private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
         OutputView.printTables(tables, cafeOrderService);
         int tableNum = InputView.inputPayTableNumber();
-        OutputView.printOrders(cafeOrderService, tableNum);
+        if(cafeOrderService.isOrderedTable(tableNum)==false){
+            OutputView.printNoOrder();
+            return;
+        };
+        Map<Menu, Long> bill = cafeOrderService.getBillByTable(tableNum);
+        OutputView.printOrders(bill);
+        OutputView.printPayMessage(tableNum);
+        int payTypeNumber = InputView.inputPayType();
+        PayType payType = PayType.findByNumber(payTypeNumber);
+        long amountOfPayment = cafeOrderService.getAmountOfPayment(tableNum, payType, bill);
+        OutputView.printAmountOfPayment(amountOfPayment);
     }
 
     private static void orderMenu(List<Table> tables, CafeOrderService cafeOrderService)

@@ -62,10 +62,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printOrders(CafeOrderService cafeOrderService, int tableNum) {
-        System.out.println("## 주문 내역");
+    public static void printOrders(Map<Menu, Long> bill) {
+        System.out.println("\n## 주문 내역");
         System.out.println("메뉴 수량 금액");
-        Map<Menu, Long> bill = cafeOrderService.getOrdersByTable(tableNum);
         bill.forEach((key, value)->{
             System.out.println(key.getName()+" "+value+" "+key.getPrice()*value);
         });
@@ -73,10 +72,23 @@ public class OutputView {
 
     public static void printMaxAlert()
     {
-        System.out.println("## 한 테이블에 주문 할 수 있는 한 메뉴의 수량은 최대 30개입니다.");
+        System.out.println("\n## 한 테이블에 주문 할 수 있는 한 메뉴의 수량은 최대 30개입니다.");
     }
     public static void printMenuAlert()
     {
-        System.out.println("## 해당 메뉴는 존재하지 않는 메뉴입니다");
+        System.out.println("\n## 해당 메뉴는 존재하지 않는 메뉴입니다");
+    }
+
+    public static void printPayMessage(int tableNum) {
+        System.out.println("\n## "+tableNum+"번 테이블의 결제를 진행합니다.");
+    }
+
+    public static void printAmountOfPayment(long amountOfPayment) {
+        System.out.println("## 최종 결제 금액");
+        System.out.println(amountOfPayment);
+    }
+
+    public static void printNoOrder(){
+        System.out.println("주문 정보가 없는 테이블입니다.\n");
     }
 }
