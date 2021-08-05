@@ -91,4 +91,8 @@ public class OutputView {
     public static void printNoOrder(){
         System.out.println("주문 정보가 없는 테이블입니다.\n");
     }
+
+    public static void printNoTableAlert() {
+        System.out.println("## 존재하지 않는 테이블입니다. \n테이블을 다시 선택하세요\n");
+    }
 }

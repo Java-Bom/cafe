@@ -15,9 +15,13 @@ public enum PayType {
 
     public static PayType findByNumber(int number){
         return Arrays.stream(values())
-                .filter(payType -> payType.number==number)
+                .filter(payType -> isEqualPayType(payType, number))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("결제 수단은 카드(1)와 현금(2)만 존재합니다."));
+    }
+
+    private static boolean isEqualPayType(PayType payType, int number){
+        return payType.number==number;
     }
 
     public int getDiscountRate(){

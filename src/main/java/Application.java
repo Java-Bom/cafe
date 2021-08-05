@@ -59,20 +59,20 @@ public class Application {
     {
         OutputView.printTables(tables, cafeOrderService);
         int tableNum = InputView.inputTableNumber();
-        boolean isValidTblNum = cafeOrderService.isValidTableNum(tableNum);
+        boolean isValidTblNum = cafeOrderService.isValidTableNumber(tableNum);
         if(isValidTblNum==false){
             orderMenu(tables, cafeOrderService);
         }
         final List<Menu> menus = MenuRepository.menus();
         OutputView.printMenus(menus);
         int menuNum = InputView.inputMenu();
-        boolean isValidMenuNum = cafeOrderService.checkMenuNum(menuNum);
+        boolean isValidMenuNum = cafeOrderService.isValidMenuNumber(menuNum);
         if(isValidMenuNum==false){
             OutputView.printMenuAlert();
             orderMenu(tables, cafeOrderService);
         }
         int menuCount = InputView.inputCount();
-        boolean isValidMenuCount = cafeOrderService.canOrderMenu(tableNum, menuNum, menuCount);
+        boolean isValidMenuCount = cafeOrderService.checkMaximumCount(tableNum, menuNum, menuCount);
         if(isValidMenuCount==false){
             OutputView.printMaxAlert();
             return;

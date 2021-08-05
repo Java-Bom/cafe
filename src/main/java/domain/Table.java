@@ -11,6 +11,8 @@ public class Table {
         return number;
     }
 
+    public boolean isEqualNumber(int tableNumber){ return this.number==number;}
+
     @Override
     public String toString() {
         return Integer.toString(number);

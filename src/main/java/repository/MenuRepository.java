@@ -24,11 +24,18 @@ public class MenuRepository {
         menus.add(new Menu(24, "그린티 라떼", Category.BEVERAGE, 6000));
     }
 
+    //해당 숫자에 해당하는 메뉴 객체를 return한다.
     public static Menu findByNumber(int number){
         return menus.stream()
-                .filter(menu -> menu.getNumber()==number)
+                .filter(menu -> menu.isEqualNumber(number))
                 .findFirst()
                 .orElseThrow(IllegalAccessError::new);
+    }
+
+    //입력된 숫자에 해당하는 메뉴가 있는지 검사한다.
+    public static boolean checkMenuNumber(int number){
+        Menu menu = findByNumber(number);
+        return menu.isEqualNumber(number);
     }
 
     public Optional<Menu> findByName(String name){

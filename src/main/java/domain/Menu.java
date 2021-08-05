@@ -29,6 +29,12 @@ public class Menu {
         return price;
     }
 
+    public boolean isEqualNumber(int number){
+        return this.number == number;
+    }
+
+    public boolean isThisCake(){ return this.category==Category.CAKE;}
+
     @Override
     public String toString() {
         return category + " " + number + " - " + name + " : " + price + "원";
