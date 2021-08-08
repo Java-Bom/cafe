@@ -2,6 +2,7 @@ package view;
 
 import java.util.Scanner;
 
+//사용자의 입력과 관련된 모든 일을 담당하는 클래스
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 

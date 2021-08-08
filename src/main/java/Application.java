@@ -42,16 +42,16 @@ public class Application {
     private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
         OutputView.printTables(tables, cafeOrderService);
         int tableNum = InputView.inputPayTableNumber();
-        if(cafeOrderService.isOrderedTable(tableNum)==false){
+        if(cafeOrderService.checkOrderedTable(tableNum)==false){
             OutputView.printNoOrder();
             return;
         };
         Map<Menu, Long> bill = cafeOrderService.getBillByTable(tableNum);
-        OutputView.printOrders(bill);
+        OutputView.printBill(bill);
         OutputView.printPayMessage(tableNum);
         int payTypeNumber = InputView.inputPayType();
         PayType payType = PayType.findByNumber(payTypeNumber);
-        long amountOfPayment = cafeOrderService.getAmountOfPayment(tableNum, payType, bill);
+        long amountOfPayment = cafeOrderService.getAmountOfPayment(tableNum, payType);
         OutputView.printAmountOfPayment(amountOfPayment);
     }
 

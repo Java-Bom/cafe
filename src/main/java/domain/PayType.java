@@ -2,6 +2,7 @@ package domain;
 
 import java.util.Arrays;
 
+//지불 수단
 public enum PayType {
     CARD(1, 0), CASH(2,10);
 

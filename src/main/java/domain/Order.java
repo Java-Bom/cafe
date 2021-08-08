@@ -10,7 +10,7 @@ public class Order {
     }
 
     public int getMenuNumber() {
-        return this.menuNumber;
+        return menuNumber;
     }
 
     public int getTableNumber() {

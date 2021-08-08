@@ -4,11 +4,13 @@ import domain.*;
 import repository.MenuRepository;
 import repository.OrderRepository;
 import repository.TableRepository;
+import view.InputView;
 import view.OutputView;
 
 import java.util.Map;
 
-public class CafeOrderService {
+//카페의 주문과 관련된 서비스를 제공하는 클래스
+public class CafeOrderService{
     private static final int DISCOUNT_FOR_CAKES = 3;
     private static final int DISCOUNT_MONEY_PER_NUM_OF_CAKES = 3000;
 
@@ -33,7 +35,7 @@ public class CafeOrderService {
         return orderRepository.checkMaximumPerMenu(tableNumber, menuNumber, menuCount);
     }
 
-    //메뉴의 번호, 수량, 테이블 번호를 입력받고 수량만큼의 주문을 추가한다.
+    //해당 수량만큼의 주문을 추가한다.
     public void orderMenu(int menuNumber, int count, int tableNumber)
     {
         for(int i=0;i<count;i++){
@@ -46,12 +48,9 @@ public class CafeOrderService {
         return orderRepository.getBill(tableNumber);
     }
 
-    //해당 테이블에 주문이 들어간 테이블인지 검사한다.
-    public boolean isOrderedTable(int tableNumber){
-        if(this.getBillByTable(tableNumber).isEmpty()){
-            return false;
-        }
-        return true;
+    //해당 테이블에 주문이 들어간 테이블인지 검사한다. --> 테이블 정보를 알고있는 객체면 좋을듯!!
+    public boolean checkOrderedTable(int tableNumber){
+        return orderRepository.isOrderedTable(tableNumber);
     }
 
     //입력된 메뉴가 존재하는 메뉴인지 검사한다.
@@ -63,35 +62,17 @@ public class CafeOrderService {
     }
 
     //지불해야하는 총 금액을 return한다.
-    public long getAmountOfPayment(int tableNumber, PayType payType, Map<Menu, Long> bill) {
-        int numberOfCakes = getNumberOfCakes(bill);
-        long amountOfPayment = getFinalPayment(bill, numberOfCakes, payType.getDiscountRate());
+    public long getAmountOfPayment(int tableNumber, PayType payType) {
+        int numberOfCakes = orderRepository.getNumberOfCakes(tableNumber);
+        long amountOfPayment = getFinalPayment(tableNumber, numberOfCakes, payType.getDiscountRate());
         orderRepository.finishedPayment(tableNumber);
 
         return amountOfPayment;
     }
 
-    //해당 테이블에서 주문한 케익의 갯수를 return한다.
-    private int getNumberOfCakes(Map<Menu, Long> bill) {
-        int numberOfCakes = 0;
-        for (Map.Entry<Menu, Long> entry : bill.entrySet()){
-            numberOfCakes += entry.getKey().isThisCake() ? entry.getValue() : 0;
-        }
-        return numberOfCakes;
-    }
-
-    //해당 테이블에서 주문한 메뉴들 가격의 총 합을 계산한다.
-    private long getSumOfPayment(Map<Menu, Long> bill){
-        long totalSumOfPayment = 0;
-        for (Map.Entry<Menu, Long> entry : bill.entrySet()){
-            totalSumOfPayment += entry.getKey().getPrice() * entry.getValue();
-        }
-        return totalSumOfPayment;
-    }
-
-    //할인을 적용한 가격을 계산한다.
-    private long getFinalPayment(Map<Menu,Long> bill, int numberOfCakes, int discountRate){
-        long totalSumOfPayment = getSumOfPayment(bill);
+    //할인을 적용한 최종 금액을 계산한다.
+    private long getFinalPayment(int tableNumber, int numberOfCakes, int discountRate){
+        long totalSumOfPayment = orderRepository.getSumOfPayment(tableNumber);
         if(numberOfCakes>=DISCOUNT_FOR_CAKES){
             totalSumOfPayment -= DISCOUNT_MONEY_PER_NUM_OF_CAKES * (numberOfCakes/3);
         }

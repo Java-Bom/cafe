@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+//출력과 관련된 모든 일을 담당하는 클래스
 public class OutputView {
     private static final String TOP_LINE = "┌ ─ ┐";
     private static final String TABLE_FORMAT = "| %s |";
@@ -46,7 +47,7 @@ public class OutputView {
 
     private static void printLine(final String line, final List<Table> tables, CafeOrderService cafeOrderService){
         for(final Table table : tables) {
-            if (cafeOrderService.isOrderedTable(table.getNumber())) {
+            if (cafeOrderService.checkOrderedTable(table.getNumber())) {
                 System.out.print(BOTTOM_LINE_ORDERED_TBL);
             } else {
                 System.out.print(BOTTOM_LINE);
@@ -62,7 +63,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printOrders(Map<Menu, Long> bill) {
+    public static void printBill(Map<Menu, Long> bill) {
         System.out.println("\n## 주문 내역");
         System.out.println("메뉴 수량 금액");
         bill.forEach((key, value)->{

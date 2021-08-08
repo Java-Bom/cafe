@@ -2,14 +2,16 @@ package repository;
 
 import domain.Menu;
 import domain.Order;
+import domain.PayType;
+import service.CafeOrderService;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
-//주문 정보들을 저장하는 클래스
-public class OrderRepository {
+//주문 정보들을 저장하고 주문한 것들의 합을 계산한다.
+public class OrderRepository{
     private static final int MAX_NUMBER_PER_MENU = 30;
     private final List<Order> orders = new ArrayList<>();
 
@@ -58,6 +60,34 @@ public class OrderRepository {
     //지불이 완료되면 해당 테이블의 주문을 모두 삭제한다.
     public void finishedPayment(int tableNumber){
         orders.removeIf(order->order.isEqualTable(tableNumber));
+    }
+
+    //해당 테이블이 주문된 테이블인지 검사한다.
+    public boolean isOrderedTable(int tableNumber){
+        if(getBill(tableNumber).isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    //해당 테이블에서 주문한 케익의 갯수를 계산한다.
+    public int getNumberOfCakes(int tableNumber) {
+        int numberOfCakes = 0;
+        Map<Menu, Long> bill = getBill(tableNumber);
+        for (Map.Entry<Menu, Long> entry : bill.entrySet()){
+            numberOfCakes += entry.getKey().isThisCake() ? entry.getValue() : 0;
+        }
+        return numberOfCakes;
+    }
+
+    //해당 테이블에서 주문한 메뉴들 가격의 총 합을 계산한다.
+    public long getSumOfPayment(int tableNumber){
+        long totalSumOfPayment = 0;
+        Map<Menu, Long> bill = getBill(tableNumber);
+        for (Map.Entry<Menu, Long> entry : bill.entrySet()){
+            totalSumOfPayment += entry.getKey().getPrice() * entry.getValue();
+        }
+        return totalSumOfPayment;
     }
 
 }
