@@ -1,32 +1,21 @@
 package domain;
 
-import java.util.Arrays;
-
 //지불 수단
-public enum PayType {
-    CARD(1, 0), CASH(2,10);
+public class PayType {
+	private final int number;
+	private final int discountRate;
 
-    private final int number;
-    private final int discountRate;
+	public PayType(int number, int discountRate) {
+		this.number = number;
+		this.discountRate = discountRate;
+	}
 
-    PayType(int number, int discountRate){
-        this.number = number;
-        this.discountRate = discountRate;
-    }
+	public boolean isEqualPayType(int number) {
+		return this.number == number;
+	}
 
-    public static PayType findByNumber(int number){
-        return Arrays.stream(values())
-                .filter(payType -> isEqualPayType(payType, number))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("결제 수단은 카드(1)와 현금(2)만 존재합니다."));
-    }
-
-    private static boolean isEqualPayType(PayType payType, int number){
-        return payType.number==number;
-    }
-
-    public int getDiscountRate(){
-        return this.discountRate;
-    }
+	public int getDiscountRate() {
+		return this.discountRate;
+	}
 
 }

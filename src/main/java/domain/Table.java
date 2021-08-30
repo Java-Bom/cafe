@@ -1,20 +1,22 @@
 package domain;
 
 public class Table {
-    private final int number;
+	private final int number;
 
-    public Table(final int number) {
-        this.number = number;
-    }
+	public Table(final int number) {
+		this.number = number;
+	}
 
-    public int getNumber() {
-        return number;
-    }
+	public int getNumber() {
+		return number;
+	}
 
-    public boolean isEqualNumber(int tableNumber){ return this.number==number;}
+	public boolean isEqualNumber(int tableNumber) {
+		return this.number == tableNumber;
+	}
 
-    @Override
-    public String toString() {
-        return Integer.toString(number);
-    }
+	@Override
+	public String toString() {
+		return Integer.toString(number);
+	}
 }
