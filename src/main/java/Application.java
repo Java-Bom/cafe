@@ -1,66 +1,70 @@
-import domain.Menu;
-//import jdk.internal.util.xml.impl.Input;
-import repository.MenuRepository;
-import domain.Table;
-import repository.OrderRepository;
-import repository.TableRepository;
+import java.util.NoSuchElementException;
+
+import domain.Bill;
+import domain.PayType;
 import service.CafeOrderService;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class Application {
-    // TODO 구현 진행
-    public static void main(String[] args) {
-        OutputView.printMain();
-        final CafeOrderService cafeOrderService = new CafeOrderService(new OrderRepository());
-        final List<Table> tables = TableRepository.tables();
-        int func = InputView.inputFunction();
+	final static int ORDER = 1;
+	final static int PAY = 2;
+	final static int STOP = 3;
 
-        while(func!=3)
-        {
-            if(func == 1)
-            {
-                orderMenu(tables, cafeOrderService);
-            }
-            if(func == 2)
-            {
-                payOrders(tables, cafeOrderService);
-            }
-            OutputView.printMain();
-            func = InputView.inputFunction();
-        }
-    }
+	// TODO 구현 진행
+	public static void main(String[] args) {
+		OutputView.printMain();
+		final CafeOrderService cafeOrderService = new CafeOrderService();
+		int selectedFunction = InputView.inputFunction();
 
-    private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
-        OutputView.printTables(tables, cafeOrderService);
-        int tableNum = InputView.inputPayTableNumber();
-        OutputView.printOrders(cafeOrderService, tableNum);
-    }
+		while (selectedFunction != STOP) {
+			if (selectedFunction == ORDER) {
+				orderMenu(cafeOrderService);
+			}
+			if (selectedFunction == PAY) {
+				payOrders(cafeOrderService);
+			}
+			if (!cafeOrderService.isValidFunction(selectedFunction, STOP, ORDER)) {
+				throw new NoSuchElementException("해당 기능은 존재하지 않습니다.");
+			}
+			OutputView.printMain();
+			selectedFunction = InputView.inputFunction();
+		}
+	}
 
-    private static void orderMenu(List<Table> tables, CafeOrderService cafeOrderService)
-    {
-        OutputView.printTables(tables, cafeOrderService);
-        int tableNum = InputView.inputTableNumber();
-        boolean isValidTblNum = cafeOrderService.isValidTableNum(tableNum);
-        if(isValidTblNum==false){
-            orderMenu(tables, cafeOrderService);
-        }
-        final List<Menu> menus = MenuRepository.menus();
-        OutputView.printMenus(menus);
-        int menuNum = InputView.inputMenu();
-        boolean isValidMenuNum = cafeOrderService.checkMenuNum(menuNum);
-        if(isValidMenuNum==false){
-            OutputView.printMenuAlert();
-            orderMenu(tables, cafeOrderService);
-        }
-        int menuCount = InputView.inputCount();
-        boolean isValidMenuCount = cafeOrderService.canOrderMenu(tableNum, menuNum, menuCount);
-        if(isValidMenuCount==false){
-            OutputView.printMaxAlert();
-            return;
-        }
-        cafeOrderService.orderMenu(menuNum, menuCount, tableNum);
-    }
+	private static void payOrders(CafeOrderService cafeOrderService) {
+		OutputView.printTables(cafeOrderService);
+		int tableNumber = InputView.inputPayTableNumber();
+		if (!cafeOrderService.checkOrderedTable(tableNumber)) {
+			OutputView.printNoOrder();
+			return;
+		}
+		Bill bill = cafeOrderService.getBillByTable(tableNumber);
+		OutputView.printBill(bill);
+		OutputView.printPayMessage(tableNumber);
+		int payTypeNumber = InputView.inputPayType();
+		PayType payType = cafeOrderService.findPayType(payTypeNumber);
+		long amountOfPayment = cafeOrderService.getAmountOfPayment(bill, payType);
+		OutputView.printAmountOfPayment(amountOfPayment);
+	}
+
+	private static void orderMenu(CafeOrderService cafeOrderService) {
+		OutputView.printTables(cafeOrderService);
+		int tableNumber = InputView.inputTableNumber();
+		if (!cafeOrderService.isValidTableNumber(tableNumber)) {
+			orderMenu(cafeOrderService);
+		}
+		OutputView.printMenus();
+		int menuNumber = InputView.inputMenu();
+		if (!cafeOrderService.isValidMenuNumber(menuNumber)) {
+			OutputView.printMenuAlert();
+			orderMenu(cafeOrderService);
+		}
+		int menuCount = InputView.inputCount();
+		if (!cafeOrderService.checkMaximumCount(tableNumber, menuNumber, menuCount)) {
+			OutputView.printMaxAlert();
+			return;
+		}
+		cafeOrderService.orderMenu(tableNumber, menuNumber, menuCount);
+	}
 }
