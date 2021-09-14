@@ -12,26 +12,25 @@ import repository.TableRepository;
 
 //카페의 주문과 관련된 서비스를 제공하는 클래스
 public class CafeOrderService {
-	private static final int DISCOUNT_FOR_CAKES = 3;
-	private static final int DISCOUNT_MONEY_PER_NUM_OF_CAKES = 3000;
-
 	private final OrderRepository orderRepository;
 
-	public CafeOrderService(OrderRepository orderRepository) {
-		this.orderRepository = orderRepository;
+	public CafeOrderService() {
+		this.orderRepository = new OrderRepository();
+	}
+
+	//사용자가 선택한 기능이 valid한지 검사한다.
+	public static boolean isValidFunction(int selectedFunction, int STOP, int ORDER) {
+		return selectedFunction <= STOP || selectedFunction >= ORDER;
 	}
 
 	//해당 테이블이 존재하는 테이블인지 검사한다.
 	public boolean isValidTableNumber(int tableNumber) {
-		if (TableRepository.findByNumber(tableNumber).isPresent()) {
-			return true;
-		}
-		return false;
+		return TableRepository.findByNumber(tableNumber).isPresent() ? true : false;
 	}
 
 	//주문하려는 메뉴의 수량이 누적 30개가 넘는지 확인한다.
 	public boolean checkMaximumCount(int tableNumber, int menuNumber, int menuCount) {
-		return orderRepository.checkMaximumPerMenu(tableNumber, menuNumber, menuCount);
+		return new Bill(orderRepository, tableNumber).checkMaximumPerMenu(menuNumber, menuCount);
 	}
 
 	// 주문을 추가한다.
@@ -44,7 +43,7 @@ public class CafeOrderService {
 		return new Bill(orderRepository, tableNumber);
 	}
 
-	//OrderedTable이면 True return
+	//OrderedTable이면 return true
 	public boolean checkOrderedTable(int tableNumber) {
 		Map<Menu, Integer> orderedMenus = getBillByTable(tableNumber).getOrderedMenus();
 
@@ -56,22 +55,12 @@ public class CafeOrderService {
 		return MenuRepository.checkMenuNumber(menuNumber) ? true : false;
 	}
 
-	//지불해야하는 총 금액을 return한다.
+	//최종 금액을 return 하고, orderRepository에서 주문을 삭제한다.
 	public long getAmountOfPayment(Bill bill, PayType payType) {
-		int numberOfCakes = orderRepository.getNumberOfCakes(bill);
-		long amountOfPayment = getFinalPayment(bill, numberOfCakes, payType.getDiscountRate());
+		long discountedPayment = bill.getDiscountedPayment(payType.getDiscountRate());
 		orderRepository.finishedPayment(bill.getTableNumber());
 
-		return amountOfPayment;
+		return discountedPayment;
 	}
 
-	//할인을 적용한 최종 금액을 계산한다.
-	private long getFinalPayment(Bill bill, int numberOfCakes, int discountRate) {
-		long totalSumOfPayment = orderRepository.getSumOfPayment(bill);
-		if (numberOfCakes >= DISCOUNT_FOR_CAKES) {
-			totalSumOfPayment -= DISCOUNT_MONEY_PER_NUM_OF_CAKES * (numberOfCakes / 3);
-		}
-		totalSumOfPayment = (long)(totalSumOfPayment - totalSumOfPayment * ((float)discountRate / 100));
-		return totalSumOfPayment;
-	}
 }

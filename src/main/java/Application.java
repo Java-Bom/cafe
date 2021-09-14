@@ -6,7 +6,6 @@ import domain.Menu;
 import domain.PayType;
 import domain.Table;
 import repository.MenuRepository;
-import repository.OrderRepository;
 import repository.PayTypeRepository;
 import repository.TableRepository;
 import service.CafeOrderService;
@@ -21,34 +20,35 @@ public class Application {
 	// TODO 구현 진행
 	public static void main(String[] args) {
 		OutputView.printMain();
-		final CafeOrderService cafeOrderService = new CafeOrderService(new OrderRepository());
+		final CafeOrderService cafeOrderService = new CafeOrderService();
 		final List<Table> tables = TableRepository.tables();
-		int func = InputView.inputFunction();
+		int selectedFunction = InputView.inputFunction();
 
-		while (func != STOP) {
-			if (func == ORDER) {
+		while (selectedFunction != STOP) {
+			if (selectedFunction == ORDER) {
 				orderMenu(tables, cafeOrderService);
 			}
-			if (func == PAY) {
+			if (selectedFunction == PAY) {
 				payOrders(tables, cafeOrderService);
-			} else if (func > STOP || func < ORDER) {
+			}
+			if (!cafeOrderService.isValidFunction(selectedFunction, STOP, ORDER)) {
 				throw new NoSuchElementException("해당 기능은 존재하지 않습니다.");
 			}
 			OutputView.printMain();
-			func = InputView.inputFunction();
+			selectedFunction = InputView.inputFunction();
 		}
 	}
 
 	private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
 		OutputView.printTables(tables, cafeOrderService);
-		int tableNum = InputView.inputPayTableNumber();
-		if (!cafeOrderService.checkOrderedTable(tableNum)) {
+		int tableNumber = InputView.inputPayTableNumber();
+		if (!cafeOrderService.checkOrderedTable(tableNumber)) {
 			OutputView.printNoOrder();
 			return;
 		}
-		Bill bill = cafeOrderService.getBillByTable(tableNum);
+		Bill bill = cafeOrderService.getBillByTable(tableNumber);
 		OutputView.printBill(bill);
-		OutputView.printPayMessage(tableNum);
+		OutputView.printPayMessage(tableNumber);
 		int payTypeNumber = InputView.inputPayType();
 		PayType payType = PayTypeRepository.findByNumber(payTypeNumber);
 		long amountOfPayment = cafeOrderService.getAmountOfPayment(bill, payType);
@@ -58,21 +58,18 @@ public class Application {
 	private static void orderMenu(List<Table> tables, CafeOrderService cafeOrderService) {
 		OutputView.printTables(tables, cafeOrderService);
 		int tableNumber = InputView.inputTableNumber();
-		boolean isValidTableNumber = cafeOrderService.isValidTableNumber(tableNumber);
-		if (!isValidTableNumber) {
+		if (!cafeOrderService.isValidTableNumber(tableNumber)) {
 			orderMenu(tables, cafeOrderService);
 		}
 		final List<Menu> menus = MenuRepository.menus();
 		OutputView.printMenus(menus);
 		int menuNumber = InputView.inputMenu();
-		boolean isValidMenuNum = cafeOrderService.isValidMenuNumber(menuNumber);
-		if (!isValidMenuNum) {
+		if (!cafeOrderService.isValidMenuNumber(menuNumber)) {
 			OutputView.printMenuAlert();
 			orderMenu(tables, cafeOrderService);
 		}
 		int menuCount = InputView.inputCount();
-		boolean isMaxMenuCount = cafeOrderService.checkMaximumCount(tableNumber, menuNumber, menuCount);
-		if (!isMaxMenuCount) {
+		if (!cafeOrderService.checkMaximumCount(tableNumber, menuNumber, menuCount)) {
 			OutputView.printMaxAlert();
 			return;
 		}
