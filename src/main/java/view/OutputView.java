@@ -5,6 +5,8 @@ import java.util.List;
 import domain.Bill;
 import domain.Menu;
 import domain.Table;
+import repository.MenuRepository;
+import repository.TableRepository;
 import service.CafeOrderService;
 
 //출력과 관련된 모든 일을 담당하는 클래스
@@ -21,15 +23,17 @@ public class OutputView {
 		System.out.println("3 - 종료");
 	}
 
-	public static void printTables(final List<Table> tables, final CafeOrderService cafeOrderService) {
+	public static void printTables(final CafeOrderService cafeOrderService) {
 		System.out.println("## 테이블 목록");
+		final List<Table> tables = TableRepository.getTables();
 		final int size = tables.size();
 		printLine(TOP_LINE, size);
 		printTableNumbers(tables);
 		printLine(BOTTOM_LINE, tables, cafeOrderService);
 	}
 
-	public static void printMenus(final List<Menu> menus) {
+	public static void printMenus() {
+		final List<Menu> menus = MenuRepository.menus();
 		for (final Menu menu : menus) {
 			System.out.println(menu);
 		}

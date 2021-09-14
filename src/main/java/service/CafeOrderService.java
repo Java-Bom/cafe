@@ -8,6 +8,7 @@ import domain.Order;
 import domain.PayType;
 import repository.MenuRepository;
 import repository.OrderRepository;
+import repository.PayTypeRepository;
 import repository.TableRepository;
 
 //카페의 주문과 관련된 서비스를 제공하는 클래스
@@ -22,6 +23,12 @@ public class CafeOrderService {
 	public static boolean isValidFunction(int selectedFunction, int STOP, int ORDER) {
 		return selectedFunction <= STOP || selectedFunction >= ORDER;
 	}
+
+	//payType을 return한다.
+	public static PayType findPayType(int payTypenumber){
+		return PayTypeRepository.findByNumber(payTypenumber);
+	}
+
 
 	//해당 테이블이 존재하는 테이블인지 검사한다.
 	public boolean isValidTableNumber(int tableNumber) {

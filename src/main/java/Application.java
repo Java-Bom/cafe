@@ -1,13 +1,7 @@
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import domain.Bill;
-import domain.Menu;
 import domain.PayType;
-import domain.Table;
-import repository.MenuRepository;
-import repository.PayTypeRepository;
-import repository.TableRepository;
 import service.CafeOrderService;
 import view.InputView;
 import view.OutputView;
@@ -21,15 +15,14 @@ public class Application {
 	public static void main(String[] args) {
 		OutputView.printMain();
 		final CafeOrderService cafeOrderService = new CafeOrderService();
-		final List<Table> tables = TableRepository.tables();
 		int selectedFunction = InputView.inputFunction();
 
 		while (selectedFunction != STOP) {
 			if (selectedFunction == ORDER) {
-				orderMenu(tables, cafeOrderService);
+				orderMenu(cafeOrderService);
 			}
 			if (selectedFunction == PAY) {
-				payOrders(tables, cafeOrderService);
+				payOrders(cafeOrderService);
 			}
 			if (!cafeOrderService.isValidFunction(selectedFunction, STOP, ORDER)) {
 				throw new NoSuchElementException("해당 기능은 존재하지 않습니다.");
@@ -39,8 +32,8 @@ public class Application {
 		}
 	}
 
-	private static void payOrders(List<Table> tables, CafeOrderService cafeOrderService) {
-		OutputView.printTables(tables, cafeOrderService);
+	private static void payOrders(CafeOrderService cafeOrderService) {
+		OutputView.printTables(cafeOrderService);
 		int tableNumber = InputView.inputPayTableNumber();
 		if (!cafeOrderService.checkOrderedTable(tableNumber)) {
 			OutputView.printNoOrder();
@@ -50,23 +43,22 @@ public class Application {
 		OutputView.printBill(bill);
 		OutputView.printPayMessage(tableNumber);
 		int payTypeNumber = InputView.inputPayType();
-		PayType payType = PayTypeRepository.findByNumber(payTypeNumber);
+		PayType payType = cafeOrderService.findPayType(payTypeNumber);
 		long amountOfPayment = cafeOrderService.getAmountOfPayment(bill, payType);
 		OutputView.printAmountOfPayment(amountOfPayment);
 	}
 
-	private static void orderMenu(List<Table> tables, CafeOrderService cafeOrderService) {
-		OutputView.printTables(tables, cafeOrderService);
+	private static void orderMenu(CafeOrderService cafeOrderService) {
+		OutputView.printTables(cafeOrderService);
 		int tableNumber = InputView.inputTableNumber();
 		if (!cafeOrderService.isValidTableNumber(tableNumber)) {
-			orderMenu(tables, cafeOrderService);
+			orderMenu(cafeOrderService);
 		}
-		final List<Menu> menus = MenuRepository.menus();
-		OutputView.printMenus(menus);
+		OutputView.printMenus();
 		int menuNumber = InputView.inputMenu();
 		if (!cafeOrderService.isValidMenuNumber(menuNumber)) {
 			OutputView.printMenuAlert();
-			orderMenu(tables, cafeOrderService);
+			orderMenu(cafeOrderService);
 		}
 		int menuCount = InputView.inputCount();
 		if (!cafeOrderService.checkMaximumCount(tableNumber, menuNumber, menuCount)) {

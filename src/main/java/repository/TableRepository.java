@@ -28,7 +28,7 @@ public class TableRepository {
 				number + "번 테이블은 존재하지 않는 테이블입니다.")));//Optional로 감싸줌으로써, Null이더라도 반환해서 클라이언트 단에서 처리해줄 수 있도록
 	}
 
-	public static List<Table> tables() {
+	public static List<Table> getTables() {
 		return Collections.unmodifiableList(tables);
 	}
 }
